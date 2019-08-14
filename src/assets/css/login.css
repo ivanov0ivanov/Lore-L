@@ -1,0 +1,12 @@
+.wrapper {
+  padding-bottom: 40px;
+}
+
+.wrapper-login {
+  margin: 125px auto 0;
+  padding: 30px;
+  border-radius: 18px;
+  font-size: 28px;
+  box-shadow: 7px 7px 25px rgba(0,0,0,.18);
+  background-color: #fff;
+}

@@ -1,0 +1,92 @@
+﻿{
+	"ru": {
+		"signin.title": "Вход/Регистрация",
+		"signin.username": "Имя пользователя",
+		"signin.password": "Пароль",
+		"signin.passwordRepeat": "Повторите пароль",
+		"signin.captcha": "Число с картинки",
+		"signin.forgot": "Забыли пароль?",
+
+		"signin.signupConfirm": "Зарегистрироваться",
+		"signin.socialSignUp": "Регистрация через социальную сеть:",
+
+		"signin.signinConfirm": "Войти",
+		"signin.socialSignIn": "Вход через социальную сеть:",
+
+		"validation.required": "Это обязательное поле",
+		"validation.userExists": "Такой пользователь не найден. Зарегистрируйтесь",
+		"validation.minLength2": "Минимум 2 символа",
+		"validation.minLength6": "Минимум 6 символов",
+		"validation.passwordChars": "Пароль должен содержать только латинские буквы и цифры",
+		"validation.passwordRepeat": "Пароли не совпадают",
+
+		"authentication.wrongData": "Попробуйте еще раз, пароль неверен либо такого пользователя не существует",
+		"authentication.tooManyTries": "Слишком много неудачных попыток авторизации подряд. Подождите час и попробуйте снова, либо снимите блокировку пройдя по ссылке в письме, отправленному на ваш почтовый адрес",
+
+        "taskPage.detailed": "Подробнее",
+        "taskPage.hide": "Скрыть",
+        "taskPage.solutions": "Решения",
+        "taskPage.inProgress": "В процессе",
+        "taskPage.comments": "Комментарии",
+        "taskPage.offerSolution": "Подать решение",
+        "taskPage.day": "д",
+        "taskPage.hour": "ч"
+	},
+	"en": {
+		"signin.title": "Registration",
+		"signin.username": "login",
+		"signin.password": "password",
+		"signin.passwordRepeat": "confirm password",
+		"signin.captcha": "enter the number from the picture",
+		"signin.forgot": "forgot your password",
+
+		"signin.signupConfirm": "enter",
+		"signin.socialSignUp": "register through social:",
+
+		"signin.signinConfirm": "enter",
+		"signin.socialSignIn": "enter through social:",
+
+		"validation.required": "required",
+		"validation.userExists": "User not found. Register",
+		"validation.minLength2": "at least 2 chars",
+		"validation.minLength6": "at least 6 chars",
+		"validation.passwordChars": "password should contain only alphanumeric chars",
+		"validation.passwordRepeat": "passwords do not match",
+
+		"authentication.wrongData": "Try again, password does not match any account",
+		"authentication.tooManyTries": "Too many unsuccessful login attempts. Try in an hour or unblock your account through the link sent to your email address",
+
+        "taskPage.detailed": "Read more",
+        "taskPage.hide": "Hide",
+        "taskPage.solutions": "Solutions",
+        "taskPage.inProgress": "In progress",
+        "taskPage.comments": "Comments",
+        "taskPage.offerSolution": "Offer solution",
+        "taskPage.day": "d",
+        "taskPage.hour": "h"
+	},
+	"ch": {
+		"signin.title": "注册",
+		"signin.username": "登录",
+		"signin.password": "密码",
+		"signin.passwordRepeat": "确认密码",
+		"signin.captcha": "输入图片中的数字",
+		"signin.forgot": "忘记密码?",
+
+		"signin.signupConfirm": "进入",
+		"signin.socialSignup": "通过社交网络注册:",
+
+		"signin.signinConfirm": "登入",
+		"signin.socialSignIn": "通过社交进入:",
+
+		"validation.required": "需要",
+		"validation.userExists": "找不到用户。 寄存器",
+		"validation.minLength2": "至少2个字符",
+		"validation.minLength6": "至少6个字符",
+		"validation.passwordChars": "密码应仅包含字母数字字符",
+		"validation.passwordRepeat": "密码不匹配",
+
+		"authentication.wrongData": "再试一次，密码与任何帐户都不匹配",
+		"authentication.tooManyTries": "登录尝试失败次数过多。 请在一小时内尝试或通过发送到您的电子邮件地址的链接取消阻止您的帐户"
+	}
+}
