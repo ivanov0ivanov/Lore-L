@@ -1,5 +1,12 @@
 ﻿{
 	"ru": {
+		"textHeader":"Совместная {break} удалённая работа {break} {b}",
+		"anew": "по-новому",
+		"signin": "Вход",
+		"signin.guest" : "Войти гостем",
+		"appStyle": "Стиль приложения",
+		"layout2.welcome": "Привет! Рада видеть, но впредь не заставляй меня ждать!",
+
 		"signin.title": "Вход/Регистрация",
 		"signin.username": "Имя пользователя",
 		"signin.password": "Пароль",
@@ -33,6 +40,14 @@
         "taskPage.hour": "ч"
 	},
 	"en": {
+		"textHeader":"Beginning {break} remote collaboration {break} {b}",
+		"anew": "anew",
+		"signin": "Log in",
+		"signin.guest" : "Enter as guest",
+		"appStyle": "Application style",
+		"layout2.welcome": "Hi! Glad to see you, but don't make me wait again!",
+
+
 		"signin.title": "Registration",
 		"signin.username": "login",
 		"signin.password": "password",
@@ -66,6 +81,13 @@
         "taskPage.hour": "h"
 	},
 	"ch": {
+		"textHeader":"'重新开始远程协作",
+		"signin": "登录",
+		"signin.guest" : "以访客身份进入",
+		"appStyle": "应用风格",
+		"layout2.welcome": "您好！ 很高兴看到，但从现在开始不要让我等！",
+
+
 		"signin.title": "注册",
 		"signin.username": "登录",
 		"signin.password": "密码",

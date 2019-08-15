@@ -8,6 +8,7 @@ import moment from 'moment'
 import VueSimpleMarkdown from 'vue-simple-markdown'
 import VueScrollTo from 'vue-scrollto'
 import separatorNum from "@/filters/separatorNum.js";
+import {i18n} from "./plugins/i18n";
 
 import components from './components'
 
@@ -19,10 +20,11 @@ Vue.prototype.$console = console
 Vue.prototype.$axios = window.axios
 
 new Vue({
+  i18n,
   router,
   store,
   render: h => h(App)
-}).$mount('#app')
+}).$mount('#app');
 
 // Скроллинг вниз
 Vue.use(VueScrollTo, {
