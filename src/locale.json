@@ -4,10 +4,14 @@
 		"anew": "по-новому",
 		"signin": "Вход",
 		"signin.guest" : "Войти гостем",
+		"signin.userExists" : "Перейти на страницу входа",
 		"appStyle": "Стиль приложения",
+
 		"layout2.welcome": "Привет! Рада видеть, но впредь не заставляй меня ждать!",
 
-		"signin.title": "Вход/Регистрация",
+
+		"signin.registration": "Регистрация",
+		"signin.enter": "Вход",
 		"signin.username": "Имя пользователя",
 		"signin.password": "Пароль",
 		"signin.passwordRepeat": "Повторите пароль",
@@ -44,21 +48,26 @@
 		"anew": "anew",
 		"signin": "Log in",
 		"signin.guest" : "Enter as guest",
+		"signin.userExists" : "Pass to login page",
 		"appStyle": "Application style",
+
 		"layout2.welcome": "Hi! Glad to see you, but don't make me wait again!",
 
 
-		"signin.title": "Registration",
+
+		"signin.registration": "Registration",
+		"signin.enter": "Log In",
+
 		"signin.username": "login",
 		"signin.password": "password",
 		"signin.passwordRepeat": "confirm password",
 		"signin.captcha": "enter the number from the picture",
 		"signin.forgot": "forgot your password",
 
-		"signin.signupConfirm": "enter",
+		"signin.signupConfirm": "Sign Up",
 		"signin.socialSignUp": "register through social:",
 
-		"signin.signinConfirm": "enter",
+		"signin.signinConfirm": "Log In",
 		"signin.socialSignIn": "enter through social:",
 
 		"validation.required": "required",
@@ -84,19 +93,23 @@
 		"textHeader":"'重新开始远程协作",
 		"signin": "登录",
 		"signin.guest" : "以访客身份进入",
+		"signin.userExists" : "轉到登錄頁面",
 		"appStyle": "应用风格",
+
 		"layout2.welcome": "您好！ 很高兴看到，但从现在开始不要让我等！",
 
 
-		"signin.title": "注册",
+		"signin.registration": "註冊",
+		"signin.enter": "登錄",
+
 		"signin.username": "登录",
 		"signin.password": "密码",
 		"signin.passwordRepeat": "确认密码",
 		"signin.captcha": "输入图片中的数字",
 		"signin.forgot": "忘记密码?",
 
-		"signin.signupConfirm": "进入",
-		"signin.socialSignup": "通过社交网络注册:",
+		"signin.signupConfirm": "註冊",
+		"signin.socialSignUp": "通过社交网络注册:",
 
 		"signin.signinConfirm": "登入",
 		"signin.socialSignIn": "通过社交进入:",

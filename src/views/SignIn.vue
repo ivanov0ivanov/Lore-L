@@ -7,7 +7,11 @@
 		<div class="wrapper">
 			<div class="wrapper-signup">
 				<h2 class="title">
-					{{ getLocaleString(domain + '.title', 'Регистрация') }}
+					{{ `${isSignup ?
+						$t('signin.registration'):
+						$t('signin.enter')
+					}`
+					}}
 				</h2>
 				<form @submit.prevent="submit">
 					<!--
@@ -24,7 +28,7 @@
 					-->
 					<zn-input
 						icon="icon-user"
-						:label="getLocaleString(domain + '.username', 'Имя пользователя')"
+						:label="$t('signin.username')"
 						v-model="$v.username.$model"
 						name="username"
 						:validation="$v.username"
@@ -35,7 +39,7 @@
 					/>
 					<zn-input
 						icon="icon-password"
-						:label="getLocaleString(domain + '.password', 'Пароль')"
+						:label="$t('signin.password')"
 						v-model.lazy="$v.password.$model"
 						type="password"
 						name="password"
@@ -49,7 +53,7 @@
 					<zn-input
 						v-if="isSignup"
 						icon="icon-password"
-						:label="getLocaleString(domain + '.passwordRepeat', 'Повторите пароль')"
+						:label="$t('signin.passwordRepeat')"
 						v-model="$v.passwordRepeat.$model"
 						type="password"
 						name="passwordRepeat"
@@ -64,7 +68,7 @@
 					<div class="field-group">
 						<zn-input
 							icon="icon-captcha"
-							:label="getLocaleString(domain + '.captcha', 'Число с картинки')"
+							:label="$t('signin.captcha')"
 							v-model="$v.captcha.$model"
 							name="captcha"
 							:validation="$v.captcha"
@@ -87,32 +91,32 @@
 						<span>{{authenticationState.message}}</span>
 						<router-link
 							v-if="authenticationState.state === 'EXISTS'"
-							to="/login"
-							>
-							{{ getLocaleString(domain + '.userExists', 'Перейти на страницу входа') }}
+							to="/login">
+							{{$t('signin.userExists')}}
 						</router-link>
 					</div>
 					<button
 					class="submit" type="submit"
-					:disabled="$v.$invalid"
-					>
-						{{ getLocaleString(`${domain}.${isSignup ?
-							'signupConfirm':
-							'signinConfirm'
-						}`, 'Зарегистрироваться') }}
+					:disabled="$v.$invalid">
+						{{ `${isSignup ?
+								$t('signin.signupConfirm'):
+								$t('signin.signinConfirm')
+							}`
+						}}
 					</button>
 				</form>
 				<!-- ссылки на соц авторизацию -->
 				<div class="oauth">
 					<h5>
-						{{ getLocaleString(`${domain}.${isSignup ?
-							'socialSignUp':
-							'socialSignIn'
-						}`, 'Регистрация через социальную есть:') }}
+						{{ `${isSignup ?
+								$t('signin.socialSignUp'):
+								$t('signin.socialSignIn')
+							}`
+						}}
 					</h5>
 					<div class="flex oauth__icons">
 						<a
-							v-for="({name, to, icon}) in providers"
+							v-for="{name, to, icon} in providers"
 							:key="name"
 							:href="to"
 						>
@@ -250,7 +254,8 @@ export default {
 		return {
 			// префикс всех ключей локализации
 			// по факту проще использовать полные ключи
-			domain: 'signin',
+			//old release
+			// domain: 'signin',
 
 			// флаг с какой кнопки пришел пользователь
 			// query ?register=true показывает форму регистрации
