@@ -2,7 +2,7 @@
     <section class="sections__container">
         <div class="container text-center p-0 pt-4 pb-1">
             <form>
-                <div class="check-sections mb-5 d-flex justify-content-between">
+                <div class="check-sections mb-4 d-flex justify-content-between">
                     <div class="align-self-center">Всего разделов проекта:</div>
                     <div>
                         <button type="button" class="btn_check-sections btn-minus rounded-circle m-2" @click="count--">-</button>
