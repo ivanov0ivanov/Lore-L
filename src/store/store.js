@@ -41,6 +41,7 @@ const defaultStorage = {
 
 export default new Vuex.Store({
 	state: {
+		isProfile: null,
 		Storage: sessionStorage || localStorage || {},
 		storage: defaultStorage,
 
@@ -53,6 +54,9 @@ export default new Vuex.Store({
 		authenticationErrorMessage: null
 	},
 	getters: {
+		getIsProfile: state => {
+			return  state.isProfile
+		},
 		// простые геттеры аля layout: (state) => state.storage.layout следует заменить на mapState
 		layout(state) {
 			return state.storage.layout;
@@ -82,6 +86,10 @@ export default new Vuex.Store({
 		authenticationToken: state => state.storage.authenticationToken
 	},
 	actions: {
+		setProfile: (context, isProfile) => {
+			context.commit('USER_PROFILE', isProfile);
+		},
+
 		// функция обновления токена авторизации
 		updateAuthenticationToken(store, token) {
 			// привязывает в заголовки аксиоса
@@ -152,6 +160,10 @@ export default new Vuex.Store({
 		}
 	},
 	mutations: {
+		USER_PROFILE: (state, isProfile) => {
+			state.isProfile = isProfile;
+		},
+
 		loadFromStorage(state) {
 			if (state.Storage.storage && JSON.parse(state.Storage.storage)) {
 				let i,

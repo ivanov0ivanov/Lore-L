@@ -1,5 +1,5 @@
 <template>
-  <div class="container">
+  <div class="container__custom">
     <div :class="'layout-'+$store.getters.layout">
       <div class="wrapper" v-if="show">
         <router-view></router-view>

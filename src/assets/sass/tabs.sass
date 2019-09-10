@@ -1,0 +1,42 @@
+.nav-link__custom_container
+  z-index: 4
+
+.nav-link__custom
+  width: 50%
+  position: relative
+  text-align: center
+  padding: 20px 60px
+  border-bottom-left-radius: 100px
+
+  &:first-child
+    color: #ffffff
+    background-color: #777676
+
+    &::after
+      content: ""
+      position: absolute
+      top: 0
+      right: -60px
+      height: 100%
+      width: 60px
+      border: 1px solid #777676
+      background-color: #777676
+
+  &:last-child
+    color: #000000
+    background-color: #ffffff
+
+
+.active__custom
+  .nav-link__custom
+    &:first-child
+      color: #000000
+      background-color: #ffffff
+
+      &::after
+        border: 1px solid #ffffff
+        background-color: #ffffff
+
+    &:last-child
+      color: #ffffff
+      background-color: #777676

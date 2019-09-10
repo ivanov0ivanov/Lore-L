@@ -8,6 +8,25 @@ import moment from 'moment'
 import VueSimpleMarkdown from 'vue-simple-markdown'
 import VueScrollTo from 'vue-scrollto'
 import separatorNum from "@/filters/separatorNum.js";
+import {i18n} from "./plugins/i18n";
+import jQuery from 'jquery';
+
+window.$ = window.jQuery = jQuery;
+
+import { library } from '@fortawesome/fontawesome-svg-core';
+import { faUserSecret, faArrowLeft, faArrowRight, faEllipsisH, faBell, faUserCircle, faPlus } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
+
+library.add(faUserSecret, faArrowLeft, faArrowRight, faEllipsisH, faBell, faUserCircle, faPlus);
+
+Vue.component('font-awesome-icon', FontAwesomeIcon);
+
+
+import 'popper.js';
+import 'bootstrap';
+import 'bootstrap/dist/css/bootstrap.min.css';
+import "./assets/sass/app.sass";
+
 
 import components from './components'
 
@@ -19,10 +38,11 @@ Vue.prototype.$console = console
 Vue.prototype.$axios = window.axios
 
 new Vue({
+  i18n,
   router,
   store,
   render: h => h(App)
-}).$mount('#app')
+}).$mount('#app');
 
 // Скроллинг вниз
 Vue.use(VueScrollTo, {

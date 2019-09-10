@@ -117,13 +117,13 @@ aside.home li.active a::before {
 
 .layout-1 .wrapper-home #header h1 b {
   font: normal bold 1.14em/1.35em 'Magnolia Script',Georgia,serif;
-  color: #36d6ca;  
+  color: #36d6ca;
 }
 
 .layout-1 .wrapper-home .btn {
   display: block;
   margin: 22px 0 15px;
-  border-radius: 40px;
+  border-radius: 40px !important;
   border: 2px solid #36d6ca;
   text-decoration: none !important;
   text-transform: uppercase;
@@ -176,7 +176,7 @@ aside.home li.active a::before {
 .layout-2 .wrapper-home .btn {
   display: block;
   margin: 22px 0 15px;
-  border-radius: 40px;
+  border-radius: 40px !important;
   border: 2px solid #a185bd;
   text-decoration: none !important;
   text-transform: uppercase;

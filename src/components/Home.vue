@@ -1,5 +1,5 @@
 <template>
-  <div class="container">
+  <div class="container__custom">
     <transition name="fade" mode="out-in" appear @after-enter="transitionComplete">
       <component :is="'layout'+$store.getters.layout"></component>
     </transition>

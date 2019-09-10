@@ -1,5 +1,5 @@
 <template>
-  <div class="container">
+  <div class="container__custom">
     <div :class="'layout-'+$store.getters.layout">
       <div class="wrapper">
         <div class="wrapper-register">
@@ -9,6 +9,17 @@
 				{{ getLocaleString('user' + '.signout', '!Выйти из учетной записи')}}
 			</button>
           <WorkProjects></WorkProjects>
+          <router-link :to="{ name: 'profile' }">{{$t('tabProfile')}}</router-link>
+          <div></div>
+          <router-link :to="{ name: 'votingPage' }">{{$t('voting.vote')}}</router-link>
+          <div></div>
+          <router-link :to="{ name: 'addtask' }">{{$t('addtasklogingrid.title')}}</router-link>
+          <div></div>
+          <router-link :to="{ name: 'listOfSolutions' }">{{$t('list.title')}}</router-link>
+          <div></div>
+          <router-link :to="{ name: 'listInProgress' }">{{$t('list.inProgress')}}</router-link>
+          <div></div>
+          <router-link :to="{ name: 'investments' }">{{$t('investments.office')}}</router-link>
         </div>
       </div>
     </div>

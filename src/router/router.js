@@ -4,7 +4,7 @@ import Home from '../components/Home.vue'
 
 import store from '../store/store'
 
-Vue.use(Router)
+Vue.use(Router);
 
 const router = new Router({
   // mode: 'hash',
@@ -24,10 +24,10 @@ const router = new Router({
       component: () => import('../views/SignIn.vue'),
       // meta.auth объект описывающий поведение модуля защиты маршрутов
       meta: {
-          auth: {
-              // successRedirect указывает по какому пути отправить пользователя если он авторизован
-              successRedirect: '/user',
-          }
+        auth: {
+          // successRedirect указывает по какому пути отправить пользователя если он авторизован
+          successRedirect: '/user',
+        }
       }
     },
     // страница проекта
@@ -45,12 +45,12 @@ const router = new Router({
     {
       path: '/listInProgress',
       name: 'listInProgress',
-      component: () => import('../views/pages/ListInProgress.vue')
+      component: () => import(/* webpackChunkName: "listInProgress" */ '../views/pages/ListInProgress.vue')
     },
     {
       path: '/listOfSolutions',
       name: 'listOfSolutions',
-      component: () => import('../views/pages/ListOfSolutions.vue')
+      component: () => import(/* webpackChunkName: "listOfSolutions" */ '../views/pages/ListOfSolutions.vue')
     },
     {
       path: '/mySolutions',
@@ -75,7 +75,7 @@ const router = new Router({
     {
       path: '/votingPage',
       name: 'votingPage',
-      component: () => import('../views/pages/VotingPage.vue')
+      component: () => import(/* webpackChunkName: "votingPage" */ '../views/pages/VotingPage.vue')
     },
     {
       path: '/proofreadingPage',
@@ -85,7 +85,12 @@ const router = new Router({
     {
       path: '/profile',
       name: 'profile',
-      component: () => import('../views/pages/Profile.vue')
+      component: () => import(/* webpackChunkName: "profile" */ '../views/pages/Profile.vue')
+    },
+    {
+      path: '/featured',
+      name: 'featured',
+      component: () => import('../views/pages/Featured.vue')
     },
     // страница задачи
     {
@@ -93,7 +98,7 @@ const router = new Router({
       name: 'task_page',
       component: () => import(/* webpackChunkName: "taskPage" */ '../views/pages/TaskPage.vue'),
     },
-  // страница подачи решения
+    // страница подачи решения
     {
       path: '/project/:project_id/submit/:task_id',
       name: 'decision',
@@ -113,9 +118,21 @@ const router = new Router({
     },
     // кабинет инвестора
     {
-      path: '/investments',
-      name: 'investments',
-      component: () => import('../views/pages/Investments.vue'),
+      path: '/InvestorPage',
+      name: 'InvestorPage',
+      component: () => import('../views/pages/InvestorPage.vue'),
+      // meta: {
+      //   auth: {
+      //     // auth.guard означает что по этому пути могут пройти только авторизованные пользователи
+      //     guard: true
+      //   }
+      // }
+    },
+    // AddTaskLognGrid
+    {
+      path: '/addtask',
+      name: 'addtask',
+      component: () => import('../views/pages/AddTaskLoginGrid.vue'),
       // meta: {
       //   auth: {
       //     // auth.guard означает что по этому пути могут пройти только авторизованные пользователи
@@ -129,50 +146,70 @@ const router = new Router({
       name: 'user',
       component: () => import(/* webpackChunkName: "login" */ '../views/User.vue'),
       meta: {
-          auth: {
-              // auth.guard означает что по этому пути могут пройти только авторизованные пользователи
-              guard: true
-          }
+        auth: {
+          // auth.guard означает что по этому пути могут пройти только авторизованные пользователи
+          guard: true
+        }
       }
     },
     {
       path: '/idea',
       name: 'idea',
       component: () => import(/* webpackChunkName: "idea" */ '../components/Idea.vue')
+    },
+    {
+      path: '/myProjects',
+      name: 'myProjects',
+      component: () => import('../views/pages/MyProjects.vue')
+    },
+    {
+      path: '/newProject',
+      name: 'newProject',
+      component: () => import('../views/pages/NewProject.vue')
+    },
+    {
+      path: '/sections',
+      name: 'sections',
+      component: () => import('../views/pages/Sections.vue')
+    },
+    {
+      path: '/sectionTasks',
+      name: 'sectionTasks',
+      component: () => import('../views/pages/SectionTasks.vue')
     }
   ]
-})
+});
 
 // модуль защиты путей
 router.beforeEach((to, from, next) => {
-    // настройки авторизации для маршрута не заданы
-    if (!to.meta.auth)
-        return next()
-    // токен может быть передан в query (oauth)
-    const token = to.query.token
-    if (token)
-        // обновляем токен
-        store.dispatch('updateAuthenticationToken', token)
+  // настройки авторизации для маршрута не заданы
+  if (!to.meta.auth)
+    return next();
+  // токен может быть передан в query (oauth)
+  const token = to.query.token;
+  if (token)
+    // обновляем токен
+    store.dispatch('updateAuthenticationToken', token);
 
-    // если не авторизованы и токена в query нету
-    if (!store.getters.authenticationToken && !token) {
-        // если маршрут защищен, перенаправить
-        if (to.meta.auth.guard)
-            // урл перенаправления указан
-            if (to.meta.auth.failureRedirect)
-                return next(to.meta.auth.failureRedirect)
-            // иначе отправить на главную
-            else
-                return next('/')
-    }
+  // если не авторизованы и токена в query нету
+  if (!store.getters.authenticationToken && !token) {
+    // если маршрут защищен, перенаправить
+    if (to.meta.auth.guard)
+      // урл перенаправления указан
+      if (to.meta.auth.failureRedirect)
+        return next(to.meta.auth.failureRedirect);
+      // иначе отправить на главную
+      else
+        return next('/')
+  }
 
-    // авторизован
-    // если указано перенаправление для авторизованных пользователей
-    else if (to.meta.auth.successRedirect)
-        return next(to.meta.auth.successRedirect)
+  // авторизован
+  // если указано перенаправление для авторизованных пользователей
+  else if (to.meta.auth.successRedirect)
+    return next(to.meta.auth.successRedirect)
 
-    // иначе никак не вмешиваться в процесс
-    next()
-})
+  // иначе никак не вмешиваться в процесс
+  next()
+});
 
 export default router

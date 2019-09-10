@@ -8,8 +8,8 @@
         :show="popup.show"
         @close="popup.show = false"
         @ok="sendDecision"
-        cancelText="Отмена"
-        okText="Подтвердить"
+        :cancelText="$t('cancel')"
+        :okText="$t('confirm')"
     >
       <template>
         <h3>Краткое решение: {{submitShortText | zero}}</h3>
