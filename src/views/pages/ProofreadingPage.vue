@@ -160,6 +160,7 @@
     },
     methods: {
       selectOption (option) {
+        // eslint-disable-next-line no-console
         console.log(option)
       },
       getAreaPlaceholder () {
@@ -169,15 +170,12 @@
         return 'Введите добавляемый текст'
       },
       isSpecifySymbol (line) {
-        const specifySymbols = ['+', '-']
-        let first = _.get(line, '[0]', '')
-        if (specifySymbols.includes((first))) {
-          return true
-        }
-        return false
+        const specifySymbols = ['+', '-'];
+        let first = _.get(line, '[0]', '');
+        return specifySymbols.includes((first));
       },
       addLine () {
-        let tasks = _.cloneDeep(this.tasks)
+        let tasks = _.cloneDeep(this.tasks);
         if (this.activeTask >= 0) {
           if (!_.isEmpty(this.infoLine)) {
             tasks.splice(this.activeTask + 1, 0, `+ ${this.infoLine}`);

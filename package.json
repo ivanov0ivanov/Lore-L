@@ -6,7 +6,7 @@
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
     "lint": "vue-cli-service lint",
-    "server-dev": "concurrently \"vue-cli-service build --watch\" \"nodemon server\"",
+    "server-dev": "concurrently \"vue-cli-service build --watch\" \"nodemon node server\"",
     "server": "vue-cli-service build && node server"
   },
   "dependencies": {
@@ -16,6 +16,7 @@
     "@fortawesome/vue-fontawesome": "^0.1.6",
     "axios": "^0.18.0",
     "bcrypt": "^3.0.6",
+    "bluebird": "^3.5.5",
     "body-parser": "^1.18.3",
     "bootstrap": "^4.3.1",
     "connect-mongo": "^2.0.3",
