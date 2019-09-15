@@ -13,27 +13,12 @@ const path = require('path'),
 
 mongoose.Promise = require('bluebird');
 
-mongoose.connect('mongodb://localhost/testmongoose', {
-    useNewUrlParser: true,
-    useUnifiedTopology: true
-});
-
-const db = mongoose.connection;
-
-db.on('error', err => {
-    console.log('error', err)
-});
-
-db.once('open', () => {
-    console.log('we are connected')
-});
 
 // Блок переменных
 const app = express(),
     port = config.port,
     secrets = config.secrets,
     dbUrl = config.mongodb.uri;
-
 
 // Настройка
 app.use('/open_project', proxy);
@@ -52,7 +37,7 @@ app.use(session({ // Сессии
     // нужно будет включить при переходе на https
     // cookie: { secure: true }
 }));
-app.use(passport.initialize());// Инициализация passport.js
+app.use(passport.initialize());  // Инициализация passport.js
 
 // Миддлверы
 app.use(require(path.join(__dirname, 'middleware', 'readUrlParams'))); // Парсинг параметров URL'а

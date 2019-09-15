@@ -49,31 +49,31 @@ export default new Vuex.Store({
                 done: false,
                 section: "Идея",
                 description: 'Искусство преобразует закон исключённого третьего. Апостериори, гравитационный парадокс абстрактен.',
-                share: 5,
-                tokens: 5000000
+                share: 1,
+                tokens: 1000000
             },
             {
                 id: 2,
                 done: false,
                 section: "Концепция",
                 description: 'Искусство преобразует закон исключённого третьего. Апостериори, гравитационный парадокс абстрактен.',
-                share: 5,
-                tokens: 5000000
+                share: 1,
+                tokens: 1000000
             },
             {
                 id: 3,
                 done: false,
                 section: "Сайт",
                 description: 'Искусство преобразует закон исключённого третьего. Апостериори, гравитационный парадокс абстрактен.',
-                share: 2,
-                tokens: 2000000
+                share: 1,
+                tokens: 1000000
             },
             {
                 id: 4,
                 done: false,
                 section: "Документация",
                 description: 'Искусство преобразует закон исключённого третьего. Апостериори, гравитационный парадокс абстрактен.',
-                share: 5,
+                share: 1,
                 tokens: 5000000
             },
             {
@@ -81,56 +81,56 @@ export default new Vuex.Store({
                 done: false,
                 section: "Демо",
                 description: 'Искусство преобразует закон исключённого третьего. Апостериори, гравитационный парадокс абстрактен.',
-                share: 3,
-                tokens: 3000000
+                share: 1,
+                tokens: 1000000
             },
             {
                 id: 6,
                 done: false,
                 section: "Сообщество",
                 description: 'Искусство преобразует закон исключённого третьего. Апостериори, гравитационный парадокс абстрактен.',
-                share: 5,
-                tokens: 5000000
+                share: 1,
+                tokens: 1000000
             },
             {
                 id: 7,
                 done: false,
                 section: "Прототип",
                 description: 'Искусство преобразует закон исключённого третьего. Апостериори, гравитационный парадокс абстрактен.',
-                share: 5,
-                tokens: 5000000
+                share: 1,
+                tokens: 1000000
             },
             {
                 id: 8,
                 done: false,
                 section: "Маркетинг",
                 description: 'Искусство преобразует закон исключённого третьего. Апостериори, гравитационный парадокс абстрактен.',
-                share: 20,
-                tokens: 20000000
+                share: 1,
+                tokens: 1000000
             },
             {
                 id: 9,
                 done: false,
                 section: "Моб. версия (iOS, android)",
                 description: 'Искусство преобразует закон исключённого третьего. Апостериори, гравитационный парадокс абстрактен.',
-                share: 5,
-                tokens: 5000000
+                share: 1,
+                tokens: 1000000
             },
             {
                 id: 10,
                 done: false,
                 section: "Раб. версия (PC)",
                 description: 'Искусство преобразует закон исключённого третьего. Апостериори, гравитационный парадокс абстрактен.',
-                share: 8,
-                tokens: 8000000
+                share: 1,
+                tokens: 1000000
             },
             {
                 id: 11,
                 done: false,
                 section: "Особая часть",
                 description: 'Искусство преобразует закон исключённого третьего. Апостериори, гравитационный парадокс абстрактен.',
-                share: 37,
-                tokens: 37000000
+                share: 1,
+                tokens: 1000000
             }
         ],
         Storage: sessionStorage || localStorage || {},
@@ -315,11 +315,19 @@ actions: {
 
         RECOUNT_SHARE:(state, {id, share}) => {
             state.defaultSections = state.defaultSections.map(item => {
+
                 if (item.id === id){
                     item.share += share;
-                    // item.tokens = item.tokens * (item.share*2 / 10);
-                    if (item.share < 1) item.share = 1;
-                    if (item.share > 50) item.share = 50;
+                    item.tokens = 1000000;
+                    item.tokens = item.tokens * item.share;
+                    if (item.share <= 1) {
+                        item.share = 1;
+                        item.tokens = 1000000;
+                    }
+                    if (item.share >= 50) {
+                        item.share = 50;
+                        item.tokens = 1000000 * item.share //tmp
+                    }
                 }
                 return item;
             })

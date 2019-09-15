@@ -54,11 +54,9 @@
             <p><a href="#" class="link-details">Подробнее</a></p>
         </div>
         <div class="pie-chart">
-            <!--            <div class="workarea">-->
-            <!--                <div id="chartarea" ref="chartdiv"></div>-->
-            <!--            </div>-->
-            <div ref="chartdiv"></div>
-
+                        <div class="workarea">
+                            <div id="chartdiv"></div>
+                        </div>
             <dl class="right">
                 <dt><b>{{item.tokens/1000000}}</b>млн.</dt>
                 <dd>Доля<br>в токенах</dd>
@@ -106,8 +104,6 @@
     import * as am4charts from "@amcharts/amcharts4/charts";
     import am4themes_animated from "@amcharts/amcharts4/themes/animated";
 
-    am4core.useTheme(am4themes_animated);
-
     export default {
         name: 'SectionList',
         data() {
@@ -146,73 +142,14 @@
         },
         mounted() {
             this.hndHelp = setTimeout(this.help, this.delayShowHelp); //Помогалка!
-
-            let chart = am4core.create(this.$refs.chartdiv, am4charts.PieChart3D);
-            chart.hiddenState.properties.opacity = 0;
-
-            chart.legend = new am4charts.Legend();
-
-            chart.data = [
-                {
-                    country: "Доля раздела в проекте",
-                    litres: this.item.share
-                },
-                {
-                    country: "Доля в токенах",
-                    litres: this.item.tokens
-                }
-            ];
-
-            let series = chart.series.push(new am4charts.PieSeries3D());
-            series.dataFields.value = "litres";
-            series.dataFields.category = "country";
+            this.renderChart();
 
         },
-
         beforeDestroy() {
             if (this.chart) {
                 this.chart.dispose();
             }
-
-//             const t = this,
-//                 script = document.createElement('script');
-//             t.getTaskList(); //tasks
-//
-//             script.id = 'scriptAmCharts';
-//             script.src = 'js/amcharts.min.js';
-//             script.async = true;
-//
-//             script.onload = function(){
-//                 var i, a = {
-//                     dataProvider: [{value: t.item.tokens * t.item.id},{value: t.item.tokens * 100 - t.item.tokens * t.item.id}],
-//                     valueField: 'value',
-//                     colors: ['#9f82ed', '#f07fa9'],
-//                     gradientType: 'radial',
-//                     gradientRatio: [0,-0.1],
-//                     outlineColor: 'transparent',
-//                     outlineAlpha: 0.8,
-//                     outlineThickness: 2,
-//                     balloonText: '<span style="font-size:14px"><b>[[value]]</b> ([[percents]]%)</span>',
-//                     depth3D: 14,
-//                     angle: 55,
-//                     startAngle: 270,
-//                     labelsEnabled: false,
-//                     marginTop: 0,
-//                     marginBottom: 0
-//                 };
-//
-//                 t.chart = new AmCharts.AmPieChart();
-//                 for (i in a) t.chart[i] = a[i];
-//                 t.chart.write('chartarea');
-//             };
-//
-//             document.head.appendChild(script);
         },
-        // beforeDestroy: function() {
-        //   const t = this;
-        //   if (t.chart) t.chart.clear();
-        //   document.getElementById('scriptAmCharts').parentNode.removeChild(document.getElementById('scriptAmCharts'));
-        // },
         watch: {
             query(value) {
                 this.setQuery({newQuery: value});
@@ -225,15 +162,45 @@
                 setQuery: 'setQuery'
             }),
 
+            renderChart () {
+                function am4themes_myTheme(target) {
+                    if (target instanceof am4core.ColorSet) {
+                        target.list = [
+                            am4core.color("#9f82ed"),
+                            am4core.color("#f07fa9")
+                        ];
+                    }
+                }
+                am4core.useTheme(am4themes_myTheme);
+                am4core.useTheme(am4themes_animated);
+
+                const chart = am4core.create("chartdiv", am4charts.PieChart3D);
+
+                chart.data = [
+                    {"value": this.item.tokens * this.item.share},
+                    {"value": this.item.tokens * 100 - this.item.tokens * this.item.share}
+                ];
+
+                const pieSeries = chart.series.push(new am4charts.PieSeries3D());
+                pieSeries.dataFields.value = "value";
+                // pieSeries.dataFields.category = "country";
+                pieSeries.labels.template.disabled = true;
+                pieSeries.ticks.template.disabled = true;
+                pieSeries.ticks.template.tooltipText = "{categoryX}\n[bold]{valueY}[/]";
+                pieSeries.radius = 130;
+                pieSeries.angle = 55;
+                pieSeries.startAngle = 270;
+                // pieSeries.tooltipText = "{categoryX}\n[bold]{valueY}[/]";
+                // chart.legend = new am4charts.Legend();
+                // chart.legend.position = "right";
+            },
+
             backSection(){
                 this.query = this.query - 1;
-                //this.setQuery({newQuery: this.query})
-
             },
 
             nextSection(){
                 this.query =  this.query + 1;
-                //this.setQuery({newQuery: this.query})
             },
 
             cleanData() {
@@ -269,13 +236,13 @@
                 this.showHelp = false; //tips
 
                 this.recountShare({id: this.item.id, share: val}); //action ..считаем токены в мутац.
-
                 // this.chart.dataProvider = [ //for CHARTS
-                //     {value:this.tokensAtDivvy*this.divvy},
-                //     {value:this.tokensAtDivvy * 100 - this.tokensAtDivvy * this.divvy}
-                //     ];
+                //     {"value": this.item.tokens * this.item.share},
+                //     {"value": this.item.tokens * 100 - this.item.tokens * this.item.share}
+                // ];
+                this.renderChart();
 
-                this.chart.validateData();
+                // this.chart.validateData();
                 this.hndHelp = setTimeout(this.help, this.delayShowHelp);
             },
 
