@@ -1,3 +1,6 @@
+.bgHover
+  background-color: #888CED !important
+
 .check-sections
   div
     &:first-child
@@ -24,8 +27,11 @@
   background-color: #ffffff
   color: #FB07D2
 
+  &:hover
+    color: #FB07D2
+
 .sections__container
-  .table-bordered
+  .table
     border: none
 
     thead
@@ -36,6 +42,19 @@
         font-size: 13px
         font-weight: bolder
 
+    tbody
+      tr
+        &:hover
+          div
+            background-color: #888CED !important
+            cursor: pointer
+            position: relative
+
+            .fa-pen, .fa-save
+              display: block
+
+            label
+              cursor: pointer
     th+td
         text-align: left
 
@@ -49,11 +68,12 @@
       &:last-child
         padding-right: 0
 
-      span
+      div
         background-color: #ffffff
         display: block
         width: 100%
         padding: 4px 5px
 
-
-
+        span
+          input
+            color: #FB07D2

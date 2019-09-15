@@ -16,15 +16,15 @@ const projectSchema = new Schema({
     // default: 4
   },
   projectName: String,
-  projectDescription: String, 
-  account: String, 
+  projectDescription: String,
+  account: String,
   section: [{ // массив разделов
     type: mongoose.Schema.Types.ObjectId,
     ref: 'Section',
     name: String,
     share: Number,   // доля раздела в проекте
     tasks: [{
-        type: mongoose.Schema.Types.ObjectId, 
+        type: mongoose.Schema.Types.ObjectId,
         ref: 'Task'
     }]
   }],
@@ -37,7 +37,7 @@ const projectSchema = new Schema({
     type: mongoose.Schema.Types.ObjectId, // Ссылка на документ из модели "User"
     ref: 'User',
     required: true
-  }],  
+  }],
   created: { // Дата создания
 	type: Date,
 	required: true,
@@ -73,9 +73,9 @@ exports.Task = mongoose.model('Task', taskSchema)
 // projectSchema.statics.add = async function({projectNumber, projectName, account, founder}) {
 	// Получение модели
 	// let Project = this
-	
+
 	// Формирование нового проекта
-	// var project = new Project({
+	// const project = new Project({
     // projectMunber: projectNumber,
     // projectName: projectName,
     // account: account,

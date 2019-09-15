@@ -176,6 +176,11 @@ const router = new Router({
       path: '/sectionTasks',
       name: 'sectionTasks',
       component: () => import('../views/pages/SectionTasks.vue')
+    },
+    {
+      path: '/progressProject',
+      name: 'progressProject',
+      component: () => import('../views/pages/progressProject.vue')
     }
   ]
 });

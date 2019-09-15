@@ -16,7 +16,7 @@
                 </div>
                 <TokensQuantity/>
                 <div class="sections-project__container pb-5">
-                    <button type="submit" class="font-weight-bold btn__sections-project">Разделы проекта</button>
+                    <router-link to="/sections" class="text-decoration-none font-weight-bold btn__sections-project">Разделы проекта</router-link>
                 </div>
             </form>
         </div>
