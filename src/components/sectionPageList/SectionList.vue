@@ -90,11 +90,11 @@
             </transition>
         </div>
         <button type="button" class="btn btn-list" @click="submit">Список задач ({{taskList.length}})</button>
-<!--        <div class="task-list" v-show="showTaskList">-->
-<!--            <ul>-->
-<!--                <li v-for="(item,key) in taskList" :key="key">{{item.title}}</li>-->
-<!--            </ul>-->
-<!--        </div>-->
+        <div class="task-list" v-show="showTaskList">
+            <ul>
+                <li v-for="(item,key) in taskList" :key="key">{{item.title}}</li>
+            </ul>
+        </div>
     </li>
 </template>
 
@@ -141,11 +141,11 @@
             }
         },
         mounted() {
-            this.hndHelp = setTimeout(this.help, this.delayShowHelp); //Помогалка!
+            this.hndHelp = setTimeout(this.help, this.delayShowHelp); //tips
             this.renderChart();
 
         },
-        beforeDestroy() {
+        beforeDestroy() { // for amcharts
             if (this.chart) {
                 this.chart.dispose();
             }
@@ -241,7 +241,6 @@
                 //     {"value": this.item.tokens * 100 - this.item.tokens * this.item.share}
                 // ];
                 this.renderChart();
-
                 // this.chart.validateData();
                 this.hndHelp = setTimeout(this.help, this.delayShowHelp);
             },

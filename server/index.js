@@ -11,22 +11,7 @@ const path = require('path'),
     body = require('body-parser'),
     proxy = require(path.join(__dirname, 'routes', 'proxy'));
 
-mongoose.Promise = require('bluebird');
 
-mongoose.connect('mongodb://localhost/testmongoose', {
-    useNewUrlParser: true,
-    useUnifiedTopology: true
-});
-
-const db = mongoose.connection;
-
-db.on('error', err => {
-    console.log('error', err)
-});
-
-db.once('open', () => {
-    console.log('we are connected')
-});
 
 // Блок переменных
 const app = express(),
