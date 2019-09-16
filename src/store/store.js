@@ -153,7 +153,8 @@ export default new Vuex.Store({
         //
         getDefaultSections: (state, _, store) => {
             const query = Number(store.query);
-            if(!!query) {
+
+            if (!!query) {
                 return state.defaultSections.filter(item => {
                     if(item.section === store.defaultSections[query].section) { // id не стабилен !!!
                         return item

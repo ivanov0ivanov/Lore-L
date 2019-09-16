@@ -36,24 +36,28 @@
     import TokensQuantity from "../newProjectPage/TokensQuantity";
     import TableItem from "./TableItem";
     import { mapActions } from 'vuex';
-    import {mapGetters} from 'vuex';
+    // import {mapGetters} from 'vuex';
+    import {mapState} from 'vuex';
 
     export default {
         name: "SectionSelection",
         components: {TableItem, TokensQuantity},
+        // computed: mapGetters ({
+        //     items: 'getDefaultSections'
+        // }),
 
-        computed: mapGetters ({
-            items: 'getDefaultSections'
-        }),
-
+        computed: {
+            ...mapState({
+                items: 'defaultSections'
+            })
+        },
         methods: {
             ...mapActions({
                 deleteSection: 'deleteSection',
-                addSection: 'addSection'
+                addSection: 'addSection',
             }),
 
             onAdd(){
-                // const defaultSections = this.$store.state.defaultSections;
                 this.addSection(this.items[this.items.length-1].id);
             },
 

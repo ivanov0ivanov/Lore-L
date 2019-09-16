@@ -9,7 +9,7 @@
                     <font-awesome-icon icon="arrow-left"/>
                 </span>
                 <span class="pl-2 text-left">
-                    Раздел {{item.id - 1}}<br>({{state_dSections[item.id - 2].section}})
+                    Раздел {{this.$store.state.query}}<br>({{state_dSections[this.$store.state.query - 1].section}})
                 </span>
                 </button>
             </div>
@@ -18,9 +18,9 @@
                 <button type="button" class="btn__next-section d-flex align-items-center p-3" @click="nextSection">
 
                 <span class="pr-2 text-left">
-                    Раздел {{item.id + 1}}<br>({{state_dSections[item.id].section}})
+                    Раздел {{this.$store.state.query + 2}}<br>({{state_dSections[this.$store.state.query + 1].section}})
                 </span>
-                    <span>
+                <span>
                     <font-awesome-icon icon="arrow-right"/>
                 </span>
                 </button>
@@ -127,7 +127,7 @@
                 newDescription: '',
                 newShare: '',
                 newTokens: '',
-                query: 0
+                query: 0,
             }
         },
         props: {
