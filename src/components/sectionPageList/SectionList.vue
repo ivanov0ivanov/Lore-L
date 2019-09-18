@@ -4,26 +4,34 @@
              class="d-flex btn_controls">
 
             <div v-if="item.section !== state_dSections[0].section" class="btn_previous__container">
-                <button type="button" class="btn__previous-section d-flex align-items-center p-3" @click="backSection">
+                <button type="button" class="btn__previous-section d-flex align-items-center p-3 m-1" @click="backSection">
                 <span>
                     <font-awesome-icon icon="arrow-left"/>
                 </span>
                 <span class="pl-2 text-left">
-                    Раздел {{this.$store.state.query}}<br>({{state_dSections[this.$store.state.query - 1].section}})
+                    {{$t("sectionList.section")}} {{this.$store.state.query}}<br>({{state_dSections[this.$store.state.query - 1].section}})
                 </span>
                 </button>
             </div>
 
-            <div v-if="item.section !== state_dSections[state_dSections.length-1].section" class="btn_next__container">
-                <button type="button" class="btn__next-section d-flex align-items-center p-3" @click="nextSection">
+            <div v-if="item.section !== state_dSections[state_dSections.length-1].section" class="btn_next__container align-self-center">
+                <button type="button" class="btn__next-section d-flex align-items-center p-3 m-1" @click="nextSection">
 
                 <span class="pr-2 text-left">
-                    Раздел {{this.$store.state.query + 2}}<br>({{state_dSections[this.$store.state.query + 1].section}})
+                    {{$t("sectionList.section")}} {{this.$store.state.query + 2}}<br>({{state_dSections[this.$store.state.query + 1].section}})
                 </span>
                 <span>
                     <font-awesome-icon icon="arrow-right"/>
                 </span>
                 </button>
+            </div>
+            <div v-else class="btn_finish__container align-self-center">
+                <button type="button" data-toggle="modal" data-target="#finishModal" class="btn__finish-section d-flex align-items-center p-3 m-1">
+                <span class="pr-2 text-left">
+                    {{$t("sectionList.finishEdit")}}
+                </span>
+                </button>
+                <ModalWindowFinishEdit/>
             </div>
         </div>
 
@@ -51,22 +59,22 @@
             </span>
             </p>
             <br>
-            <p><a href="#" class="link-details">Подробнее</a></p>
+            <p><a href="#" class="link-details">{{$t('sectionList.details')}}</a></p>
         </div>
         <div class="pie-chart">
                         <div class="workarea">
                             <div id="chartdiv"></div>
                         </div>
             <dl class="right">
-                <dt><b>{{item.tokens/1000000}}</b>млн.</dt>
-                <dd>Доля<br>в токенах</dd>
+                <dt><b>{{item.tokens/1000000}}</b>{{$t("sectionList.mln")}}</dt>
+                <dd>{{$t("sectionList.shareinTokens1")}}<br>{{$t("sectionList.shareinTokens2")}}</dd>
             </dl>
             <dl>
                 <dt><b>{{item.share}}%</b></dt>
-                <dd>Доля раздела<br>в проекте</dd>
+                <dd>{{$t("sectionList.shareshareinProject1")}}<br>{{$t("sectionList.shareshareinProject2")}}</dd>
             </dl>
             <div class="text-center">
-                <h4>Изменить долю</h4>
+                <h4>{{$t("sectionList.checkShare")}}</h4>
                 <div class="btn-group">
                     <button type="button" class="btn" @click="incdec(1)">+1</button>
                     <button type="button" class="btn" @click="incdec(-1)">-1</button>
@@ -83,17 +91,17 @@
             <transition name="fade">
                 <a href="#" class="help" v-show="showHelp" @click.prevent="showHelpMessage = !showHelpMessage">
                     <img src="/img/layout-2/help.png" alt="help"><br>
-                    <span>Помочь?</span>
-                    <em v-show="showHelpMessage"><i class="arrow-right"></i>Текст текст текст текст текст текст текст
-                        текст.</em>
+                    <span>{{$t("sectionList.help")}}?</span>
+                    <em v-show="showHelpMessage"><i class="arrow-right"></i>I help you!</em>
                 </a>
             </transition>
         </div>
-        <button type="button" class="btn btn-list" @click="submit">Список задач ({{taskList.length}})</button>
+        <button type="button" class="btn btn-list" @click="submit">{{$t("sectionList.sectionasList")}} ({{item.tasksList.length}})</button>
         <div class="task-list" v-show="showTaskList">
-            <ul>
-                <li v-for="(item,key) in taskList" :key="key">{{item.title}}</li>
-            </ul>
+<!--            <ul>-->
+<!--                <li v-for="(item,key) in taskList" :key="key">{{item.title}}</li>-->
+<!--            </ul>-->
+            <SectionTasks :sectionsId="item.id"/>
         </div>
     </li>
 </template>
@@ -103,9 +111,12 @@
     import * as am4core from "@amcharts/amcharts4/core";
     import * as am4charts from "@amcharts/amcharts4/charts";
     import am4themes_animated from "@amcharts/amcharts4/themes/animated";
+    import SectionTasks from "../../views/pages/SectionTasks";
+    import ModalWindowFinishEdit from "./ModalWindowFinishEdit";
 
     export default {
         name: 'SectionList',
+        components: {ModalWindowFinishEdit, SectionTasks},
         data() {
             return {
                 storage: {
@@ -118,7 +129,7 @@
                 delayShowHelp: 7000,
                 hndHelp: 0,
                 // tokensAtDivvy: 15000,
-                taskList: [],
+                // taskList: [],
                 showTaskList: false,
 
                 state_dSections: this.$store.state.defaultSections,
@@ -249,20 +260,20 @@
                 clearTimeout(this.hndHelp);
                 this.showHelp = false;
                 this.showTaskList = !this.showTaskList;
-                if (this.showTaskList) {
-                    this.$axios.post('', {}).then(function (resp) {
-                        if (resp) this.$console.log('submited');
-                    });
-                } else this.hndHelp = setTimeout(this.help, this.delayShowHelp);
+                // if (this.showTaskList) {
+                //     this.$axios.post('', {}).then(function (resp) {
+                //         if (resp) this.$console.log('submited');
+                //     });
+                // } else this.hndHelp = setTimeout(this.help, this.delayShowHelp);
             },
 
-            getTaskList() { //tasks list
-                this.$axios.get('').then(function (resp) {
-                    if (resp) this.$console.log('loaded');
-                    this.taskList.push({title: '123'});
-                    this.taskList.push({title: '34786'});
-                });
-            },
+            // getTaskList() { //tasks list
+            //     this.$axios.get('').then(function (resp) {
+            //         if (resp) this.$console.log('loaded');
+            //         this.taskList.push({title: '123'});
+            //         this.taskList.push({title: '34786'});
+            //     });
+            // },
 
             help() {
                 this.showHelpMessage = false;

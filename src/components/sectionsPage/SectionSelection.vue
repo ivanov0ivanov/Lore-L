@@ -3,7 +3,7 @@
         <div class="container text-center p-0 pt-4 pb-1">
             <form>
                 <div class="check-sections mb-4 d-flex justify-content-between">
-                    <div class="align-self-center">Всего разделов проекта:</div>
+                    <div class="align-self-center">{{$t('sections.totalSections')}}:</div>
                     <div>
                         <button type="button" class="btn_check-sections btn-minus rounded-circle m-2" @click.prevent="onDelete">-</button>
                         <span>{{this.$store.state.defaultSections.length}}</span>
@@ -14,18 +14,18 @@
                     <thead>
                     <tr class="text-white">
                         <th scope="col">#</th>
-                        <th scope="col">Раздел</th>
-                        <th scope="col">Доля</th>
-                        <th scope="col">Число токенов</th>
+                        <th scope="col">{{$t('sections.tableSectionSection')}}</th>
+                        <th scope="col">{{$t('sections.tableSectionShare')}}</th>
+                        <th scope="col">{{$t('sections.tableSectionCurrentTokens')}}</th>
                     </tr>
                     </thead>
                     <tbody>
-                        <TableItem v-for="(item, index) of items" :key="item.id" :item="item" :index="index"/>
+                    <TableItem v-for="(item, index) of items" :key="item.id" :item="item" :index="index"/>
                     </tbody>
                 </table>
                 <TokensQuantity/>
                 <div class="first-section__container pt-5 pb-2 d-flex justify-content-center">
-                    <router-link to="/idea" class="text-decoration-none btn__first-section">Первый раздел проекта ({{this.items[0].section}})</router-link>
+                    <router-link to="/idea" class="text-decoration-none btn__first-section">{{$t('sections.tableFirstProject')}}: ({{this.items[0].section}})</router-link>
                 </div>
             </form>
         </div>

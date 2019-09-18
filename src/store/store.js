@@ -50,7 +50,37 @@ export default new Vuex.Store({
                 section: "Идея",
                 description: 'Искусство преобразует закон исключённого третьего. Апостериори, гравитационный парадокс абстрактен.',
                 share: 1,
-                tokens: 1000000
+                tokens: 1000000,
+                tasksList: [
+                    {
+                        id: 1,
+                        done: false,
+                        title: ' Разработать дизайн',
+                        description: 'Дизайн',
+                        tokens: '2000'
+                    },
+                    {
+                        id: 2,
+                        done: false,
+                        title: 'Создать модуль',
+                        description: 'Программирование',
+                        tokens: '30000'
+                    },
+                    {
+                        id: 3,
+                        done: false,
+                        title: 'Перевести на китайский',
+                        description: 'Переводы',
+                        tokens: '5000'
+                    },
+                    {
+                        id: 4,
+                        done: false,
+                        title: 'Обновить сайт',
+                        description: 'Веб',
+                        tokens: '3000'
+                    }
+                ]
             },
             {
                 id: 2,
@@ -58,7 +88,24 @@ export default new Vuex.Store({
                 section: "Концепция",
                 description: 'Искусство преобразует закон исключённого третьего. Апостериори, гравитационный парадокс абстрактен.',
                 share: 1,
-                tokens: 1000000
+                tokens: 1000000,
+                tasksList: [
+                    {
+                        id: 1,
+                        done: false,
+                        title: 'Разработать дизайн',
+                        description: 'Дизайн',
+                        tokens: '2000'
+                    },
+                    {
+                        id: 2,
+                        done: false,
+                        title: 'Создать модуль',
+                        description: 'Программирование',
+                        tokens: '30000'
+                    },
+
+                ]
             },
             {
                 id: 3,
@@ -66,7 +113,8 @@ export default new Vuex.Store({
                 section: "Сайт",
                 description: 'Искусство преобразует закон исключённого третьего. Апостериори, гравитационный парадокс абстрактен.',
                 share: 1,
-                tokens: 1000000
+                tokens: 1000000,
+                tasksList: []
             },
             {
                 id: 4,
@@ -74,7 +122,8 @@ export default new Vuex.Store({
                 section: "Документация",
                 description: 'Искусство преобразует закон исключённого третьего. Апостериори, гравитационный парадокс абстрактен.',
                 share: 1,
-                tokens: 5000000
+                tokens: 1000000,
+                tasksList: []
             },
             {
                 id: 5,
@@ -82,7 +131,8 @@ export default new Vuex.Store({
                 section: "Демо",
                 description: 'Искусство преобразует закон исключённого третьего. Апостериори, гравитационный парадокс абстрактен.',
                 share: 1,
-                tokens: 1000000
+                tokens: 1000000,
+                tasksList: []
             },
             {
                 id: 6,
@@ -90,7 +140,8 @@ export default new Vuex.Store({
                 section: "Сообщество",
                 description: 'Искусство преобразует закон исключённого третьего. Апостериори, гравитационный парадокс абстрактен.',
                 share: 1,
-                tokens: 1000000
+                tokens: 1000000,
+                tasksList: []
             },
             {
                 id: 7,
@@ -98,7 +149,8 @@ export default new Vuex.Store({
                 section: "Прототип",
                 description: 'Искусство преобразует закон исключённого третьего. Апостериори, гравитационный парадокс абстрактен.',
                 share: 1,
-                tokens: 1000000
+                tokens: 1000000,
+                tasksList: []
             },
             {
                 id: 8,
@@ -106,7 +158,8 @@ export default new Vuex.Store({
                 section: "Маркетинг",
                 description: 'Искусство преобразует закон исключённого третьего. Апостериори, гравитационный парадокс абстрактен.',
                 share: 1,
-                tokens: 1000000
+                tokens: 1000000,
+                tasksList: []
             },
             {
                 id: 9,
@@ -114,7 +167,8 @@ export default new Vuex.Store({
                 section: "Моб. версия (iOS, android)",
                 description: 'Искусство преобразует закон исключённого третьего. Апостериори, гравитационный парадокс абстрактен.',
                 share: 1,
-                tokens: 1000000
+                tokens: 1000000,
+                tasksList: []
             },
             {
                 id: 10,
@@ -122,7 +176,8 @@ export default new Vuex.Store({
                 section: "Раб. версия (PC)",
                 description: 'Искусство преобразует закон исключённого третьего. Апостериори, гравитационный парадокс абстрактен.',
                 share: 1,
-                tokens: 1000000
+                tokens: 1000000,
+                tasksList: []
             },
             {
                 id: 11,
@@ -130,7 +185,8 @@ export default new Vuex.Store({
                 section: "Особая часть",
                 description: 'Искусство преобразует закон исключённого третьего. Апостериори, гравитационный парадокс абстрактен.',
                 share: 1,
-                tokens: 1000000
+                tokens: 1000000,
+                tasksList: []
             }
         ],
         Storage: sessionStorage || localStorage || {},
@@ -211,6 +267,17 @@ actions: {
             context.commit('RECOUNT_SHARE', share)
         },
 
+        addTask: (context, {id, sectId}) => {
+            context.commit('ADD_TASK', {
+                id: id + 1,
+                title: 'New Task',
+                description: 'description',
+                tokens: 0,
+                done: false,
+                sectId
+            });
+        },
+
         addSection: (context, id) => {
             context.commit('ADD_SECTION', {
                 id: id + 1,
@@ -218,12 +285,22 @@ actions: {
                 section: '',
                 description: '',
                 share: 0,
-                tokens: 0
+                tokens: 0,
+                tasksList: []
             });
+        },
+
+
+        deleteTask: (context) => {
+            context.commit('DELETE_TASK');
         },
 
         deleteSection: (context) => {
             context.commit('DELETE_SECTION');
+        },
+
+        toggleDoneTask: (context, sectId) => {
+            context.commit('TOGGLE_DONE_TASK', sectId);
         },
 
         toggleDone: (context, id) => {
@@ -232,6 +309,10 @@ actions: {
 
         editSections: (context, section) => {
             context.commit('EDIT_SECTIONS', section);
+        },
+
+        editTask: (context, section) => {
+            context.commit('EDIT_TASK', section);
         },
 
         setProfile: (context, isProfile) => {
@@ -334,12 +415,50 @@ actions: {
             })
         },
 
+        ADD_TASK: (state, {id, done, title, description, tokens, sectId}) => {
+            const task= {
+                id: id,
+                done: done,
+                title: title,
+                description: description,
+                tokens: tokens
+            };
+            state.defaultSections = state.defaultSections.map(item => {
+                if(item.id === sectId) {
+                     item.tasksList.push(task)
+                }
+                return item;
+            });
+        },
+
         ADD_SECTION: (state, section) => {
             state.defaultSections.push(section);
         },
 
+        DELETE_TASK: (state) => {
+                state.defaultSections = state.defaultSections.map(item => {
+                    item.tasksList = item.tasksList.filter(itm => itm.done !== true);
+                    return item
+                })
+
+        },
+
         DELETE_SECTION: (state) => {
                 state.defaultSections = state.defaultSections.filter(item => item.done !== true);
+        },
+
+        TOGGLE_DONE_TASK: (state, {done, sectId}) => {
+            state.defaultSections = state.defaultSections.map(item => {
+                if(item.id === sectId) {
+                    item.tasksList = item.tasksList.map(itm => {
+                        if(itm.id === done) {
+                            itm.done = !itm.done;
+                        }
+                       return itm
+                    });
+                }
+                return item;
+            });
         },
 
         TOGGLE_DONE: (state, id) => {
@@ -351,17 +470,29 @@ actions: {
             });
         },
 
-        EDIT_SECTIONS: (state, {id, section, description, share, tokens}) => {
+        EDIT_SECTIONS: (state, {id, section, description, share}) => {
             state.defaultSections = state.defaultSections.map(item => {
-                if(item.id === id) {
+                if (item.id === id) {
                     item.section = section;
                     item.description = description;
                     item.share = share;
-                    item.tokens = tokens;
                 }
                 return item;
             });
         },
+
+        EDIT_TASK: (state, {id, title, description}) => {
+        state.defaultSections = state.defaultSections.map(item => {
+            item.tasksList.map(itm => {
+                if(itm.id === id) {
+                    itm.title = title;
+                    itm.description = description;
+                }
+                return itm
+            });
+            return item;
+        });
+    },
 
         USER_PROFILE: (state, isProfile) => {
             state.isProfile = isProfile;

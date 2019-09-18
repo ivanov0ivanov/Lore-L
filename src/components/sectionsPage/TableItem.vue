@@ -25,8 +25,8 @@
         <td>
             <div v-bind:class="{bgHover:item.done}">
                 <span>
-                    <label v-if="!isEdit" class="form-check-label">{{item.tokens}}</label>
-                    <input v-else style="width: 100%" class="border-0 pl-3 pr-1 text-center bg-light" @keyup.enter="onSave" type="number" @keyup.esc="onCancel" v-model="newTokens">
+                    <label class="form-check-label">{{(item.tokens).toLocaleString('ru')}}</label>
+<!--                    <input v-else style="width: 100%" class="border-0 pl-3 pr-1 text-center bg-light" @keyup.enter="onSave" type="number" @keyup.esc="onCancel" v-model="newTokens">-->
                 </span>
             </div>
         </td>
@@ -42,7 +42,7 @@
             return {
                 newSection: '',
                 newShare: '',
-                newTokens: '',
+                // newTokens: '',
                 isEdit: false
             }
         },
@@ -67,7 +67,6 @@
             cleanData(){
                 this.newSection = '';
                 this.newShare = '';
-                this.newTokens = '';
             },
 
             onEdit() {
@@ -81,7 +80,6 @@
             switchToEdit() {
                 this.newSection = this.item.section;
                 this.newShare = this.item.share;
-                this.newTokens = this.item.tokens;
                 this.isEdit = true;
             },
             onCancel() {
@@ -93,8 +91,7 @@
                 this.editSections({
                     id: this.item.id,
                     section: this.newSection,
-                    share: this.newShare,
-                    tokens: this.newTokens
+                    share: this.newShare
                 });
                 this.cleanData();
             }

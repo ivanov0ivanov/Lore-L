@@ -140,7 +140,65 @@
 		"solutions.date": "Дата",
 		"solutions.member": "Участник",
 		"solutions.members": "Участник(и)",
-		"solutions.actions": "Действия"
+		"solutions.actions": "Действия",
+
+
+		"myproject.startproject1": "Пора начать",
+		"myproject.startproject2": "НОВЫЙ",
+		"myproject.startproject3": "ПРОЕКТ!",
+		"myproject.projectswork": "Проекты в работе",
+		"myproject.project": "Проекты",
+		"myproject.viewprogress": "См. Прогресс",
+		"myproject.readiness": "Готовность",
+		"myproject.overview": "Обзор",
+		"myproject.members": "Участники",
+		"myproject.setting": "Настройки",
+		"myproject.issued": "Токенов выпущено",
+		"myproject.paid": "Токенов выплачено",
+		"myproject.change": "Внести изменения",
+
+
+		"newproject.shortname": "Краткое наименование проекта",
+		"newproject.fullname": "Полное наименование",
+		"newproject.shortdescr": "Краткое описание",
+		"newproject.detailedescr": "Подробное описание",
+		"newproject.sections": "Разделы проекта",
+
+		"tokensQuantity": "Условных токенов проекта",
+
+
+		"sections.totalSections": "Всего разделов проекта",
+		"sections.tableSectionSection": "Раздел",
+		"sections.tableSectionShare": "Доля",
+		"sections.tableSectionCurrentTokens": "Число токенов",
+		"sections.tableFirstProject": "Первый раздел проекта",
+
+		"sectionList.section": "Раздел",
+		"sectionList.details": "Подробнее",
+		"sectionList.mln": "млн",
+		"sectionList.shareinTokens1": "Доля",
+		"sectionList.shareinTokens2": "в токенах",
+		"sectionList.shareshareinProject1": "Доля раздела",
+		"sectionList.shareshareinProject2": "в проекте",
+		"sectionList.checkShare": "Изменить долю",
+		"sectionList.help": "Помочь",
+		"sectionList.sectionasList": "Список задач",
+
+		"sectionList.sectionasTasks": "Список задач",
+
+		"sectionList.finishEdit": "Окончить редактирование",
+
+		"modalFinishEdit.title": "Окончить редактирование?",
+		"modalFinishEdit.edit": "Изменить",
+		"modalFinishEdit.ok": "Ок",
+
+		"progress.progressProject": "Прогресс проекта",
+		"progress.readyProject": "Готовность проекта",
+		"progress.deadlines": "Соблюдение сроков",
+		"progress.community": "Сообщество",
+		"progress.citation1": "Цитируемость",
+		"progress.citation2": "(использование другими проектами)",
+		"progress.myProject":"Мои проекты"
 
 
 	},
@@ -282,7 +340,63 @@
 		"solutions.date": "Date",
 		"solutions.member": "Member",
 		"solutions.members": "Member('s)",
-		"solutions.actions": "Actions"
+		"solutions.actions": "Actions",
+
+		"myproject.startproject1": "Start",
+		"myproject.startproject2": "NEW",
+		"myproject.startproject3": "PROJECT",
+		"myproject.projectswork": "Projects in work",
+		"myproject.project": "Projects",
+		"myproject.viewprogress": "Watch the progress",
+		"myproject.readiness": "Readiness",
+		"myproject.overview": "Overview",
+		"myproject.members": "Members",
+		"myproject.setting": "Setting",
+		"myproject.issued": "Tokens issued",
+		"myproject.paid": "Tokens paid",
+		"myproject.change": "Make changes",
+
+
+		"newproject.shortname": "Short name of the project",
+		"newproject.fullname": "Full name",
+		"newproject.shortdescr": "Short description",
+		"newproject.detaileddescr": "Detailed description",
+		"newproject.sections": "Project Sections",
+
+		"tokensQuantity": "Conditional Tokens of the Project",
+
+
+		"sections.totalSections": "Total Project Sections",
+		"sections.tableSectionSection": "Section",
+		"sections.tableSectionShare": "Share",
+		"sections.tableSectionCurrentTokens": "Number of tokens",
+		"sections.tableFirstProject": "The first section of the project",
+
+		"sectionList.section": "Section",
+		"sectionList.details": "More details",
+		"sectionList.mln": "mln",
+		"sectionList.shareinTokens1": "Share",
+		"sectionList.shareinTokens2": "in tokens",
+		"sectionList.shareshareinProject1": "Section share",
+		"sectionList.shareshareinProject2": "in project",
+		"sectionList.checkShare": "Change share",
+		"sectionList.help": "To help",
+		"sectionList.sectionasList": "Task list",
+
+		"sectionList.sectionasTasks": "Section Tasks",
+		"sectionList.finishEdit": "Finish editing",
+
+		"modalFinishEdit.title": "Finish editing?",
+		"modalFinishEdit.edit": "Edit",
+		"modalFinishEdit.ok": "Ok",
+
+		"progress.progressProject": "Project progress",
+		"progress.readyProject": "Project readiness",
+		"progress.deadlines": "Deadlines",
+		"progress.community": "Community",
+		"progress.citation1": "Citation",
+		"progress.citation2": "(use by other projects)",
+		"progress.myProject":"My Projects"
 
 	},
 	"ch": {
@@ -414,6 +528,62 @@
 		"solutions.date": "日期",
 		"solutions.member": "成員",
 		"solutions.members": "参展商",
-		"solutions.actions": "行動"
+		"solutions.actions": "行動",
+
+
+		"myproject.startproject1": "開始",
+		"myproject.startproject2": "新",
+		"myproject.startproject3": "項目",
+		"myproject.projectswork": "工作中的項目",
+		"myproject.project": "項目",
+		"myproject.viewprogress": "觀察進展情況",
+		"myproject.readiness": "準備就緒",
+		"myproject.overview": "概觀",
+		"myproject.members": "會員",
+		"myproject.setting": "設置",
+		"myproject.issued": "代幣發行",
+		"myproject.paid": "代幣支付",
+		"myproject.change": "做出改變",
+
+
+		"newproject.shortname": "項目的簡稱",
+		"newproject.fullname": "全名",
+		"newproject.shortdescr": "簡短說明",
+		"newproject.detaileddescr": "詳細說明",
+		"newproject.sections": "項目部分",
+
+		"tokensQuantity": "項目的條件令牌",
+
+		"sections.totalSections": "項目總數",
+		"sections.tableSectionSection": "部分",
+		"sections.tableSectionShare": "分享",
+		"sections.tableSectionCurrentTokens": "令牌數量",
+		"sections.tableFirstProject": "項目的第一部分",
+
+		"sectionList.section": "部分",
+		"sectionList.details": "更多細節",
+		"sectionList.mln": "一百萬",
+		"sectionList.shareinTokens1": "分享",
+		"sectionList.shareinTokens2": "在令牌中",
+		"sectionList.shareshareinProject1": "科分享",
+		"sectionList.shareshareinProject2": "在項目中",
+		"sectionList.checkShare": "改變份額",
+		"sectionList.help": "幫助",
+		"sectionList.sectionasList": "任務列表",
+
+		"sectionList.sectionasTasks": "部分任务",
+		"sectionList.finishEdit": "完成編輯",
+
+		"modalFinishEdit.title": "完成編輯？",
+		"modalFinishEdit.edit": "編輯",
+		"modalFinishEdit.ok": "好",
+
+		"progress.progressProject": "項目進展",
+		"progress.readyProject": "項目準備就緒",
+		"progress.deadlines": "截止日期",
+		"progress.community": "社區",
+		"progress.citation1": "引文",
+		"progress.citation2": "(其他項目使用)",
+		"progress.myProject":"我的项目"
 	}
 }

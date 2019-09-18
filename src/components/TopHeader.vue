@@ -1,5 +1,8 @@
 <template>
-  <nav v-bind:class="{bg: !this.$store.state.isProfile, generalBg:this.$store.state.isProfile === null}" class="navbar pt-4 pb-1">
+  <nav v-bind:class="{
+  bg: !this.$store.state.isProfile,
+  generalBg:this.$store.state.isProfile === null,
+  bgTransparent:this.$store.state.isProfile === 0}" class="navbar pt-4 pb-1">
     <router-link to="/" class="menu-link back">
       <font-awesome-icon class="text-dark" icon="arrow-left"/>
     </router-link>
@@ -29,6 +32,9 @@
 </template>
 
 <style scoped lang="sass">
+  .bgTransparent
+    background: transparent !important
+
   .wrapper-home
     min-height: auto !important
 </style>

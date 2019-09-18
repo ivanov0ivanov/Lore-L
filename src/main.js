@@ -22,12 +22,13 @@ import {
     faBell,
     faUserCircle,
     faPlus,
+    faMinus,
     faPen,
     faSave
 } from '@fortawesome/free-solid-svg-icons';
 import {FontAwesomeIcon} from '@fortawesome/vue-fontawesome';
 
-library.add(faUserSecret, faArrowLeft, faArrowRight, faEllipsisH, faBell, faUserCircle, faPlus, faPen, faSave);
+library.add(faUserSecret, faArrowLeft, faArrowRight, faEllipsisH, faBell, faUserCircle, faMinus, faPlus, faPen, faSave);
 
 Vue.component('font-awesome-icon', FontAwesomeIcon);
 
