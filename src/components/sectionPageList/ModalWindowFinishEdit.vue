@@ -20,6 +20,7 @@
                         </thead>
                         <tbody>
                             <TableItem v-for="(item, index) of items" :key="item.id" :item="item" :index="index"/>
+                            <SpecialPart/>
                         </tbody>
                     </table>
                 </div>
@@ -35,9 +36,10 @@
 <script>
     import TableItem from "../sectionsPage/TableItem";
     import {mapState} from 'vuex';
+    import SpecialPart from "../sectionsPage/SpecialPart";
     export default {
         name: "ModalWindowFinishEdit",
-        components: {TableItem},
+        components: {SpecialPart, TableItem},
 
         computed: {
             ...mapState({

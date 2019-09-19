@@ -1,17 +1,20 @@
 <template>
-    <tr>
+  <tr>
         <th scope="row">
-            <div v-bind:class="{bgHover:item.done}" @click.prevent="toggleDone(item.id)">{{index + 1}}</div>
+            <div v-bind:class="{bgHover:item.done}" @click.prevent="checkOnToggleDone">{{index + 1}}</div>
         </th>
         <td>
-            <div v-bind:class="{bgHover:item.done}" class="d-flex justify-content-between" @click.prevent="toggleDone(item.id)">
+            <div v-bind:class="{bgHover:item.done}" class="d-flex justify-content-between" @click.prevent="checkOnToggleDone">
                 <span>
-                    <input type="checkbox" :checked="item.done" @change="toggleDone(item.id)" class="form-check-input d-none">
+                    <input v-if="!item.special" type="checkbox" :checked="item.done" @change="toggleDone(item.id)" class="form-check-input d-none">
                     <label v-if="!isEdit" class="form-check-label">{{item.section}}</label>
                     <input v-else type="text" class="border-0 bg-light pl-1 pr-1" @keyup.enter="onSave" @keyup.esc="onCancel" v-model="newSection">
                 </span>
-                <font-awesome-icon v-if="!isEdit" icon="pen" @click.prevent="switchToEdit"/>
-                <font-awesome-icon v-else icon="save" @click.prevent="onSave"/>
+                <span v-if="!item.special">
+                    <font-awesome-icon v-if="!isEdit" icon="pen" @click.prevent="switchToEdit"/>
+                    <font-awesome-icon v-else icon="save" @click.prevent="onSave"/>
+                </span>
+
             </div>
         </td>
         <td>
@@ -26,7 +29,6 @@
             <div v-bind:class="{bgHover:item.done}">
                 <span>
                     <label class="form-check-label">{{(item.tokens).toLocaleString('ru')}}</label>
-<!--                    <input v-else style="width: 100%" class="border-0 pl-3 pr-1 text-center bg-light" @keyup.enter="onSave" type="number" @keyup.esc="onCancel" v-model="newTokens">-->
                 </span>
             </div>
         </td>
@@ -35,15 +37,17 @@
 
 <script>
     import { mapActions } from 'vuex';
-
+    import {mapState} from "vuex";
+    import {mapGetters} from "vuex";
     export default {
         name: "TableItem",
         data() {
             return {
                 newSection: '',
                 newShare: '',
-                // newTokens: '',
-                isEdit: false
+                isEdit: false,
+                tokenAmount: '',
+                shareAmount: ''
             }
         },
 
@@ -57,16 +61,49 @@
                 required: true
             }
         },
+        computed: {
+            ...mapGetters({
+                tokensCounter: "getTokensCounter"
+            }),
+
+            ...mapState({
+                defaultSections: "defaultSections"
+            })
+        },
+
+        mounted() {
+            this.recountData();
+        },
 
         methods: {
             ...mapActions({
                 editSections: 'editSections',
-                toggleDone: 'toggleDone'
+                toggleDone: 'toggleDone',
+                recountSpecialPart: "recountSpecialPart"
             }),
 
+            recountData() {
+                this.defaultSections.forEach(item => {
+                    if(!item.special === true) this.shareAmount = Number(this.shareAmount) + Number(item.share);
+                    if(!item.special === true) this.tokenAmount = Number(this.tokenAmount) + Number(item.tokens);
+                });
+                    if(this.shareAmount !== 0) {
+                        this.recountSpecialPart({
+                            recountShare: Number(100 - this.shareAmount),
+                            recountTokens: Number(this.$store.state.tokensCounter.totalTokens - this.tokenAmount)});
+                    }
+
+                this.cleanData();
+            },
+
+            checkOnToggleDone(){
+                if(!this.item.special) this.toggleDone(this.item.id)
+            },
             cleanData(){
                 this.newSection = '';
                 this.newShare = '';
+                this.tokenAmount = '';
+                this.shareAmount = '';
             },
 
             onEdit() {
@@ -91,9 +128,11 @@
                 this.editSections({
                     id: this.item.id,
                     section: this.newSection,
-                    share: this.newShare
+                    share: this.newShare,
+                    tokens: this.$store.state.tokensCounter.totalTokens / 100 * this.newShare
                 });
                 this.cleanData();
+                this.recountData();
             }
         }
     }

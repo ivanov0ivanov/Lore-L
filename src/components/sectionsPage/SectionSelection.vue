@@ -20,7 +20,8 @@
                     </tr>
                     </thead>
                     <tbody>
-                    <TableItem v-for="(item, index) of items" :key="item.id" :item="item" :index="index"/>
+                        <TableItem v-for="(item, index) of items" :key="item.id" :item="item" :index="index"/>
+
                     </tbody>
                 </table>
                 <TokensQuantity/>
@@ -36,7 +37,7 @@
     import TokensQuantity from "../newProjectPage/TokensQuantity";
     import TableItem from "./TableItem";
     import { mapActions } from 'vuex';
-    // import {mapGetters} from 'vuex';
+    //import {mapGetters} from 'vuex';
     import {mapState} from 'vuex';
 
     export default {
@@ -45,7 +46,12 @@
         // computed: mapGetters ({
         //     items: 'getDefaultSections'
         // }),
-
+        data(){
+            return {
+                shareAmount: '',
+                tokenAmount: ''
+            }
+        },
         computed: {
             ...mapState({
                 items: 'defaultSections'
@@ -55,16 +61,33 @@
             ...mapActions({
                 deleteSection: 'deleteSection',
                 addSection: 'addSection',
+                recountSpecialPart: "recountSpecialPart"
             }),
+
+
+            // recountData() {
+            //     this.defaultSections.forEach(item => {
+            //         if(!item.special === true) this.shareAmount = Number(this.shareAmount) + Number(item.share);
+            //         if(!item.special === true) this.tokenAmount = Number(this.tokenAmount) + Number(item.tokens);
+            //     });
+            //
+            //     if(this.shareAmount !== 0) {
+            //         this.recountSpecialPart({
+            //             recountShare: Number(100 - this.shareAmount),
+            //             recountTokens: Number(this.$store.state.tokensCounter.totalTokens - this.tokenAmount)});
+            //     }
+            // },
 
             onAdd(){
                 this.addSection(this.items[this.items.length-1].id);
+                // this.recountData();
             },
 
             onDelete() {
                 if(this.items.some(elem => elem.done === true)){
                     if(confirm('Вы уверены что хотите удалить это?')) {
-                        this.deleteSection()
+                        this.deleteSection();
+                        // this.recountData();
                     }
                 } else {
                     alert('Выберите раздел')

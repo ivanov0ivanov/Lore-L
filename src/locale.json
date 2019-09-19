@@ -161,7 +161,7 @@
 		"newproject.shortname": "Краткое наименование проекта",
 		"newproject.fullname": "Полное наименование",
 		"newproject.shortdescr": "Краткое описание",
-		"newproject.detailedescr": "Подробное описание",
+		"newproject.detaileddescr": "Подробное описание",
 		"newproject.sections": "Разделы проекта",
 
 		"tokensQuantity": "Условных токенов проекта",
@@ -187,6 +187,8 @@
 		"sectionList.sectionasTasks": "Список задач",
 
 		"sectionList.finishEdit": "Окончить редактирование",
+		"sectionList.specialPart": "Особая часть",
+
 
 		"modalFinishEdit.title": "Окончить редактирование?",
 		"modalFinishEdit.edit": "Изменить",
@@ -385,6 +387,7 @@
 
 		"sectionList.sectionasTasks": "Section Tasks",
 		"sectionList.finishEdit": "Finish editing",
+		"sectionList.specialPart": "Special Part",
 
 		"modalFinishEdit.title": "Finish editing?",
 		"modalFinishEdit.edit": "Edit",
@@ -573,6 +576,7 @@
 
 		"sectionList.sectionasTasks": "部分任务",
 		"sectionList.finishEdit": "完成編輯",
+		"sectionList.specialPart": "特別部分",
 
 		"modalFinishEdit.title": "完成編輯？",
 		"modalFinishEdit.edit": "編輯",

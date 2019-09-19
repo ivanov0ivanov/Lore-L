@@ -34,7 +34,6 @@
                 <ModalWindowFinishEdit/>
             </div>
         </div>
-
         <div class="chapter"><img src="/img/layout-2/idea.png" alt=""></div>
         <div class="editable">
             <div>
@@ -43,7 +42,7 @@
             </div>
             <h2>
             <span>
-                 <label v-if="!isEdit" class="form-check-label">Раздел «{{item.section}}»</label>
+                 <label v-if="!isEdit || item.special" class="form-check-label">Раздел «{{item.section}}»</label>
                  <input v-else type="text" class="border-0 bg-light pl-1 pr-1 text-center" @keyup.enter="onSave"
                         @keyup.esc="onCancel" v-model="newSection">
             </span>
@@ -62,9 +61,9 @@
             <p><a href="#" class="link-details">{{$t('sectionList.details')}}</a></p>
         </div>
         <div class="pie-chart">
-                        <div class="workarea">
-                            <div id="chartdiv"></div>
-                        </div>
+            <div class="workarea">
+                <div id="chartdiv"></div>
+            </div>
             <dl class="right">
                 <dt><b>{{item.tokens/1000000}}</b>{{$t("sectionList.mln")}}</dt>
                 <dd>{{$t("sectionList.shareinTokens1")}}<br>{{$t("sectionList.shareinTokens2")}}</dd>
@@ -73,7 +72,7 @@
                 <dt><b>{{item.share}}%</b></dt>
                 <dd>{{$t("sectionList.shareshareinProject1")}}<br>{{$t("sectionList.shareshareinProject2")}}</dd>
             </dl>
-            <div class="text-center">
+            <div v-if="!item.special" class="text-center">
                 <h4>{{$t("sectionList.checkShare")}}</h4>
                 <div class="btn-group">
                     <button type="button" class="btn" @click="incdec(1)">+1</button>

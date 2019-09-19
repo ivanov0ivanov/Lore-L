@@ -43,6 +43,11 @@ export default new Vuex.Store({
     state: {
         isProfile: null,
         query: 0,
+        tokensCounter: {
+            totalTokens: 10000,
+            specialPartShare: 0,
+            specialPartTokens: 0
+        },
         defaultSections: [
             {
                 id: 1,
@@ -50,12 +55,12 @@ export default new Vuex.Store({
                 section: "Идея",
                 description: 'Искусство преобразует закон исключённого третьего. Апостериори, гравитационный парадокс абстрактен.',
                 share: 1,
-                tokens: 1000000,
+                tokens: 100,
                 tasksList: [
                     {
                         id: 1,
                         done: false,
-                        title: ' Разработать дизайн',
+                        title: 'Разработать дизайн',
                         description: 'Дизайн',
                         tokens: '2000'
                     },
@@ -88,7 +93,7 @@ export default new Vuex.Store({
                 section: "Концепция",
                 description: 'Искусство преобразует закон исключённого третьего. Апостериори, гравитационный парадокс абстрактен.',
                 share: 1,
-                tokens: 1000000,
+                tokens: 100,
                 tasksList: [
                     {
                         id: 1,
@@ -113,7 +118,7 @@ export default new Vuex.Store({
                 section: "Сайт",
                 description: 'Искусство преобразует закон исключённого третьего. Апостериори, гравитационный парадокс абстрактен.',
                 share: 1,
-                tokens: 1000000,
+                tokens: 100,
                 tasksList: []
             },
             {
@@ -122,7 +127,7 @@ export default new Vuex.Store({
                 section: "Документация",
                 description: 'Искусство преобразует закон исключённого третьего. Апостериори, гравитационный парадокс абстрактен.',
                 share: 1,
-                tokens: 1000000,
+                tokens: 100,
                 tasksList: []
             },
             {
@@ -131,7 +136,7 @@ export default new Vuex.Store({
                 section: "Демо",
                 description: 'Искусство преобразует закон исключённого третьего. Апостериори, гравитационный парадокс абстрактен.',
                 share: 1,
-                tokens: 1000000,
+                tokens: 100,
                 tasksList: []
             },
             {
@@ -140,7 +145,7 @@ export default new Vuex.Store({
                 section: "Сообщество",
                 description: 'Искусство преобразует закон исключённого третьего. Апостериори, гравитационный парадокс абстрактен.',
                 share: 1,
-                tokens: 1000000,
+                tokens: 100,
                 tasksList: []
             },
             {
@@ -149,7 +154,7 @@ export default new Vuex.Store({
                 section: "Прототип",
                 description: 'Искусство преобразует закон исключённого третьего. Апостериори, гравитационный парадокс абстрактен.',
                 share: 1,
-                tokens: 1000000,
+                tokens: 100,
                 tasksList: []
             },
             {
@@ -158,7 +163,7 @@ export default new Vuex.Store({
                 section: "Маркетинг",
                 description: 'Искусство преобразует закон исключённого третьего. Апостериори, гравитационный парадокс абстрактен.',
                 share: 1,
-                tokens: 1000000,
+                tokens: 100,
                 tasksList: []
             },
             {
@@ -167,7 +172,7 @@ export default new Vuex.Store({
                 section: "Моб. версия (iOS, android)",
                 description: 'Искусство преобразует закон исключённого третьего. Апостериори, гравитационный парадокс абстрактен.',
                 share: 1,
-                tokens: 1000000,
+                tokens: 100,
                 tasksList: []
             },
             {
@@ -176,16 +181,17 @@ export default new Vuex.Store({
                 section: "Раб. версия (PC)",
                 description: 'Искусство преобразует закон исключённого третьего. Апостериори, гравитационный парадокс абстрактен.',
                 share: 1,
-                tokens: 1000000,
+                tokens: 100,
                 tasksList: []
             },
             {
                 id: 11,
+                special: true,
                 done: false,
                 section: "Особая часть",
                 description: 'Искусство преобразует закон исключённого третьего. Апостериори, гравитационный парадокс абстрактен.',
                 share: 1,
-                tokens: 1000000,
+                tokens: 1,
                 tasksList: []
             }
         ],
@@ -201,10 +207,11 @@ export default new Vuex.Store({
         authenticationErrorMessage: null
     },
     getters: {
+        //for count tokens
+        getTokensCounter: state => state.tokensCounter,
+
         //for sort items
-        getQuery: state => {
-            return state.query
-        },
+        getQuery: state => state.query,
         //default sections
         //
         getDefaultSections: (state, _, store) => {
@@ -259,6 +266,14 @@ export default new Vuex.Store({
     },
 
 actions: {
+        recountSpecialPart: (context, recountTokens) => {
+            context.commit('RECOUNT_SPECIAL_PART', recountTokens)
+        },
+
+        editTotalTokens: (context, totalTokens) => {
+            context.commit('EDIT_TOTAL_TOKENS', totalTokens)
+        },
+
         setQuery: (context , query) => {
             context.commit('SET_QUERY', query)
         },
@@ -389,6 +404,22 @@ actions: {
         }
     },
     mutations: {
+        RECOUNT_SPECIAL_PART: (state, {recountShare, recountTokens}) => {
+            state.tokensCounter.specialPartShare = recountShare;
+            state.tokensCounter.specialPartTokens = recountTokens;
+            state.defaultSections = state.defaultSections.map(item => {
+                if(item.special === true) {
+                    item.share = recountShare;
+                    item.tokens = recountTokens;
+                }
+                return item
+            })
+        },
+
+        EDIT_TOTAL_TOKENS: (state, totalTokens) => {
+            state.tokensCounter.totalTokens = totalTokens;
+        },
+
         SET_QUERY:(state, {newQuery}) => {
             if (state.query <= 0) state.query = 0;
             if (state.query >= state.defaultSections.length) state.query = state.defaultSections.length;
@@ -470,12 +501,13 @@ actions: {
             });
         },
 
-        EDIT_SECTIONS: (state, {id, section, description, share}) => {
+        EDIT_SECTIONS: (state, {id, section, description, share, tokens}) => {
             state.defaultSections = state.defaultSections.map(item => {
                 if (item.id === id) {
                     item.section = section;
                     item.description = description;
                     item.share = share;
+                    item.tokens = tokens;
                 }
                 return item;
             });
