@@ -21,7 +21,7 @@
             <div v-bind:class="{bgHover:item.done}">
                 <span>
                     <label v-if="!isEdit" class="form-check-label">{{item.share}}%</label>
-                    <input v-else style="width: 15px" class="border-0 bg-light text-center" @keyup.enter="onSave" type="text" @keyup.esc="onCancel" v-model="newShare">
+                    <input v-else style="width: 25px" class="border-0 bg-light text-center" @keyup.enter="onSave" type="number" @keyup.esc="onCancel" v-model="newShare">
                 </span>
             </div>
         </td>
@@ -63,7 +63,7 @@
         },
         computed: {
             ...mapGetters({
-                tokensCounter: "getTokensCounter"
+                tokensCounter: "getTokensCounter",
             }),
 
             ...mapState({
@@ -92,14 +92,14 @@
                             recountShare: Number(100 - this.shareAmount),
                             recountTokens: Number(this.$store.state.tokensCounter.totalTokens - this.tokenAmount)});
                     }
-
                 this.cleanData();
             },
 
             checkOnToggleDone(){
                 if(!this.item.special) this.toggleDone(this.item.id)
             },
-            cleanData(){
+
+            cleanData() {
                 this.newSection = '';
                 this.newShare = '';
                 this.tokenAmount = '';
@@ -124,15 +124,25 @@
                 this.cleanData();
             },
             onSave() {
-                this.isEdit = false;
-                this.editSections({
-                    id: this.item.id,
-                    section: this.newSection,
-                    share: this.newShare,
-                    tokens: this.$store.state.tokensCounter.totalTokens / 100 * this.newShare
+                this.defaultSections = this.defaultSections.map(item => {
+                    if(item.special === true) {
+
+                        if (item.share >= 0 && item.share >= this.newShare) {
+                                this.isEdit = false;
+                                this.editSections({
+                                    id: this.item.id,
+                                    section: this.newSection,
+                                    share: this.newShare,
+                                    tokens: this.$store.state.tokensCounter.totalTokens / 100 * this.newShare
+                                });
+                                this.cleanData();
+                                this.recountData();
+
+                        } else {
+                            alert('Особая часть не должна быть равной 0')
+                        }
+                    }
                 });
-                this.cleanData();
-                this.recountData();
             }
         }
     }

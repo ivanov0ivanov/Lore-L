@@ -28,33 +28,60 @@
 <script>
     import {mapGetters} from "vuex";
     import { mapActions } from 'vuex';
+    import {mapState} from 'vuex';
+
     export default {
         name: "TokensQuantity",
         data: () => {
             return {
                 isEdit: false,
-                newTotalTokens: ""
+                newTotalTokens: "",
+                shareAmount: "",
+                tokenAmount: ""
             }
         },
         computed: {
             ...mapGetters({
                 tokensCounter: "getTokensCounter"
+            }),
+
+            ...mapState({
+                items: 'defaultSections'
             })
+
         },
 
         methods: {
             ...mapActions({
-                editTotalTokens: "editTotalTokens"
+                editTotalTokens: "editTotalTokens",
+                recountSpecialPart: "recountSpecialPart"
             }),
+
+            recountData() {
+                this.items.forEach(item => {
+                    if(!item.special === true) this.shareAmount = Number(this.shareAmount) + Number(item.share);
+                    if(!item.special === true) this.tokenAmount = Number(this.tokenAmount) + Number(item.tokens);
+                });
+
+                if(this.shareAmount !== 0) {
+                    this.recountSpecialPart({
+                        recountShare: Number(100 - this.shareAmount),
+                        recountTokens: Number(this.$store.state.tokensCounter.totalTokens - this.tokenAmount)});
+                }
+                this.cleanData();
+            },
 
             cleanData(){
                 this.newTotalTokens = '';
+                this.tokenAmount = '';
+                this.shareAmount = '';
             },
 
             switchToEdit() {
                 this.newTotalTokens = this.tokensCounter.totalTokens;
                 this.isEdit = true;
             },
+
             onCancel() {
                 this.isEdit = false;
                 this.cleanData();
@@ -63,6 +90,7 @@
             onSave() {
                 this.isEdit = false;
                 this.editTotalTokens(this.newTotalTokens);
+                this.recountData();
                 this.cleanData();
             }
         }

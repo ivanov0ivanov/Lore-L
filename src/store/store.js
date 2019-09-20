@@ -270,16 +270,16 @@ actions: {
             context.commit('RECOUNT_SPECIAL_PART', recountTokens)
         },
 
+        recountEditSection: (context, recount) => {
+            context.commit('RECOUNT_EDIT_SECTIONS', recount)
+        },
+
         editTotalTokens: (context, totalTokens) => {
             context.commit('EDIT_TOTAL_TOKENS', totalTokens)
         },
 
         setQuery: (context , query) => {
             context.commit('SET_QUERY', query)
-        },
-
-        recountShare:(context, share) => {
-            context.commit('RECOUNT_SHARE', share)
         },
 
         addTask: (context, {id, sectId}) => {
@@ -416,6 +416,25 @@ actions: {
             })
         },
 
+        RECOUNT_EDIT_SECTIONS: (state, {id, share, tokens}) => {
+            state.defaultSections = state.defaultSections.map(item => {
+                if(item.id === id) {
+                        item.share = share;
+                        item.tokens = tokens;
+
+                    if (item.share <= 1) {
+                        item.share = 1;
+                        item.tokens = state.tokensCounter.totalTokens / 100 * item.share
+                    }
+                    if (item.share > 50) {
+                        item.share = 50;
+                        item.tokens = state.tokensCounter.totalTokens / 100 * item.share
+                    }
+                }
+                return item
+            })
+        },
+
         EDIT_TOTAL_TOKENS: (state, totalTokens) => {
             state.tokensCounter.totalTokens = totalTokens;
         },
@@ -424,26 +443,6 @@ actions: {
             if (state.query <= 0) state.query = 0;
             if (state.query >= state.defaultSections.length) state.query = state.defaultSections.length;
             state.query += newQuery;
-        },
-
-        RECOUNT_SHARE:(state, {id, share}) => {
-            state.defaultSections = state.defaultSections.map(item => {
-
-                if (item.id === id){
-                    item.share += share;
-                    item.tokens = 1000000;
-                    item.tokens = item.tokens * item.share;
-                    if (item.share <= 1) {
-                        item.share = 1;
-                        item.tokens = 1000000;
-                    }
-                    if (item.share >= 50) {
-                        item.share = 50;
-                        item.tokens = 1000000 * item.share //tmp
-                    }
-                }
-                return item;
-            })
         },
 
         ADD_TASK: (state, {id, done, title, description, tokens, sectId}) => {

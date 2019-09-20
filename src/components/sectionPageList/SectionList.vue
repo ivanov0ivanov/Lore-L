@@ -97,9 +97,6 @@
         </div>
         <button type="button" class="btn btn-list" @click="submit">{{$t("sectionList.sectionasList")}} ({{item.tasksList.length}})</button>
         <div class="task-list" v-show="showTaskList">
-<!--            <ul>-->
-<!--                <li v-for="(item,key) in taskList" :key="key">{{item.title}}</li>-->
-<!--            </ul>-->
             <SectionTasks :sectionsId="item.id"/>
         </div>
     </li>
@@ -107,6 +104,7 @@
 
 <script>
     import {mapActions} from 'vuex';
+    import {mapState} from "vuex";
     import * as am4core from "@amcharts/amcharts4/core";
     import * as am4charts from "@amcharts/amcharts4/charts";
     import am4themes_animated from "@amcharts/amcharts4/themes/animated";
@@ -138,6 +136,8 @@
                 newShare: '',
                 newTokens: '',
                 query: 0,
+                tokenAmount: '',
+                shareAmount: ''
             }
         },
         props: {
@@ -153,6 +153,7 @@
         mounted() {
             this.hndHelp = setTimeout(this.help, this.delayShowHelp); //tips
             this.renderChart();
+            this.recountData();
 
         },
         beforeDestroy() { // for amcharts
@@ -165,11 +166,19 @@
                 this.setQuery({newQuery: value});
             }
         },
+
+        computed: {
+            ...mapState({
+                defaultSections: "defaultSections"
+            })
+        },
+
         methods: {
             ...mapActions({
                 editSections: 'editSections',
-                recountShare: 'recountShare',
-                setQuery: 'setQuery'
+                setQuery: 'setQuery',
+                recountSpecialPart: "recountSpecialPart",
+                recountEditSection: 'recountEditSection'
             }),
 
             renderChart () {
@@ -193,16 +202,12 @@
 
                 const pieSeries = chart.series.push(new am4charts.PieSeries3D());
                 pieSeries.dataFields.value = "value";
-                // pieSeries.dataFields.category = "country";
                 pieSeries.labels.template.disabled = true;
                 pieSeries.ticks.template.disabled = true;
                 pieSeries.ticks.template.tooltipText = "{categoryX}\n[bold]{valueY}[/]";
                 pieSeries.radius = 130;
                 pieSeries.angle = 55;
                 pieSeries.startAngle = 270;
-                // pieSeries.tooltipText = "{categoryX}\n[bold]{valueY}[/]";
-                // chart.legend = new am4charts.Legend();
-                // chart.legend.position = "right";
             },
 
             backSection(){
@@ -213,11 +218,25 @@
                 this.query =  this.query + 1;
             },
 
+            recountData() {
+                this.defaultSections.forEach(item => {
+                    if(!item.special === true) this.shareAmount = Number(this.shareAmount) + Number(item.share);
+                    if(!item.special === true) this.tokenAmount = Number(this.tokenAmount) + Number(item.tokens);
+                });
+                if(this.shareAmount !== 0) {
+                    this.recountSpecialPart({
+                        recountShare: Number(100 - this.shareAmount),
+                        recountTokens: Number(this.$store.state.tokensCounter.totalTokens - this.tokenAmount)});
+                }
+                this.cleanData();
+            },
+
             cleanData() {
                 this.newSection = '';
                 this.newDescription = '';
                 this.newShare = '';
-                this.newTokens = '';
+                this.tokenAmount = '';
+                this.shareAmount = '';
             },
             switchToEdit() {
                 this.newSection = this.item.section;
@@ -237,21 +256,38 @@
                     section: this.newSection,
                     description: this.newDescription,
                     share: this.newShare,
-                    tokens: this.newTokens
+                    tokens: this.$store.state.tokensCounter.totalTokens / 100 * this.newShare
                 });
+                this.recountData();
                 this.cleanData();
             },
+
             incdec(val) {
                 clearTimeout(this.hndHelp); //tips
                 this.showHelp = false; //tips
 
-                this.recountShare({id: this.item.id, share: val}); //action ..считаем токены в мутац.
-                // this.chart.dataProvider = [ //for CHARTS
-                //     {"value": this.item.tokens * this.item.share},
-                //     {"value": this.item.tokens * 100 - this.item.tokens * this.item.share}
-                // ];
+                this.newShare = this.item.share + val;
+
+                this.defaultSections = this.defaultSections.map(item => {
+                    if(item.special === true) {
+
+                         if (item.share >= 0 && item.share >= this.newShare) {
+                            this.recountEditSection({
+                                id: this.item.id,
+                                share: this.newShare,
+                                tokens: this.$store.state.tokensCounter.totalTokens / 100 * this.newShare
+                            });
+                            this.cleanData();
+                            this.recountData();
+
+                        } else {
+                            alert('Особая часть не должна быть равной 0')
+                        }
+                    }
+                });
                 this.renderChart();
-                // this.chart.validateData();
+                this.cleanData();
+
                 this.hndHelp = setTimeout(this.help, this.delayShowHelp);
             },
 
@@ -259,20 +295,7 @@
                 clearTimeout(this.hndHelp);
                 this.showHelp = false;
                 this.showTaskList = !this.showTaskList;
-                // if (this.showTaskList) {
-                //     this.$axios.post('', {}).then(function (resp) {
-                //         if (resp) this.$console.log('submited');
-                //     });
-                // } else this.hndHelp = setTimeout(this.help, this.delayShowHelp);
             },
-
-            // getTaskList() { //tasks list
-            //     this.$axios.get('').then(function (resp) {
-            //         if (resp) this.$console.log('loaded');
-            //         this.taskList.push({title: '123'});
-            //         this.taskList.push({title: '34786'});
-            //     });
-            // },
 
             help() {
                 this.showHelpMessage = false;
