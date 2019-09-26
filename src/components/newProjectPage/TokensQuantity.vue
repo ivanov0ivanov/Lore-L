@@ -10,7 +10,7 @@
                     </button>
                     <span>
                     <label v-if="!isEdit" class="form-check-label">{{Number(tokensCounter.totalTokens).toLocaleString('ru')}}</label>
-                    <input v-else type="number" class=" w-50 border-0 bg-light p-0 pl-1 pr-1 rounded black" @keyup.enter="onSave" @keyup.esc="onCancel" v-model="newTotalTokens">
+                    <input v-else type="number" class=" w-50 border-0 bg-light p-0 pl-1 pr-1 rounded black" @keypress.enter="onSave" @keyup.esc="onCancel" v-model="newTotalTokens">
                     </span>
                     <button type="button" v-if="!isEdit" class="btn_check-tokens btn-plus rounded-circle m-2" @click.prevent="switchToEdit">+</button>
                     <button type="button" v-else class="btn_check-tokens btn-plus rounded-circle m-2" @click.prevent="onSave">
@@ -54,43 +54,59 @@
         methods: {
             ...mapActions({
                 editTotalTokens: "editTotalTokens",
-                recountSpecialPart: "recountSpecialPart"
+                recountSpecialPart: "recountSpecialPart",
+                recTokens: "recTokens",
+                recShare: "recShare"
             }),
 
-            recountData() {
+            reciTokens() { // update this token if set new total tokens
                 this.items.forEach(item => {
-                    if(!item.special === true) this.shareAmount = Number(this.shareAmount) + Number(item.share);
-                    if(!item.special === true) this.tokenAmount = Number(this.tokenAmount) + Number(item.tokens);
-                });
+                    if(item.special !== true) {
+                        this.recTokens(this.tokensCounter.totalTokens / 100 * item.share)
+                    }
+                })
+            },
+
+            recountData() { //update special part
+                this.items.forEach(item => {
+                    if(!item.special === true) this.shareAmount = Number(this.shareAmount) + Number(item.share); // sum all shares(%)
+                    if(!item.special === true) this.tokenAmount = Number(this.tokenAmount) + Number(item.tokens);// sum all tokens
+                }); // this for update special part
 
                 if(this.shareAmount !== 0) {
-                    this.recountSpecialPart({
-                        recountShare: Number(100 - this.shareAmount),
+                    this.recountSpecialPart({  // recount special part
+                        recountShare: Number(100 - this.shareAmount), // 100% - sum all shares(%) = share in special part
                         recountTokens: Number(this.$store.state.tokensCounter.totalTokens - this.tokenAmount)});
                 }
                 this.cleanData();
             },
 
-            cleanData(){
+            cleanData(){ //clean data
                 this.newTotalTokens = '';
                 this.tokenAmount = '';
                 this.shareAmount = '';
             },
 
-            switchToEdit() {
+            switchToEdit() { // open edit menu
                 this.newTotalTokens = this.tokensCounter.totalTokens;
                 this.isEdit = true;
             },
 
-            onCancel() {
+            onCancel() { //on esc
                 this.isEdit = false;
                 this.cleanData();
             },
 
-            onSave() {
+            onSave() { //save new data
                 this.isEdit = false;
-                this.editTotalTokens(this.newTotalTokens);
-                this.recountData();
+                this.editTotalTokens(Number(this.newTotalTokens)); //new total tokens
+
+                if(this.newTotalTokens !== this.tokensCounter.totalTokens) { // if you set a new value
+                    this.recShare(1); // update this share(%)
+                    this.reciTokens(); // update this token
+                }
+
+                this.recountData();  //update special part
                 this.cleanData();
             }
         }

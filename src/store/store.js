@@ -219,13 +219,13 @@ export default new Vuex.Store({
 
             if (!!query) {
                 return state.defaultSections.filter(item => {
-                    if(item.section === store.defaultSections[query].section) { // id не стабилен !!!
+                    if (item.section === store.defaultSections[query].section) { // id не стабилен !!!
                         return item
                     }
                 });
             } else if (query === 0) {
                 return state.defaultSections.filter(item => {
-                    if(item.section === store.defaultSections[query].section) { // id не стабилен !!!
+                    if (item.section === store.defaultSections[query].section) { // id не стабилен !!!
                         return item
                     }
                 });
@@ -265,7 +265,15 @@ export default new Vuex.Store({
         authenticationToken: state => state.storage.authenticationToken
     },
 
-actions: {
+    actions: {
+        recShare: (context, recountShare) => {
+            context.commit('REC_SHARE', recountShare)
+        },
+
+        recTokens: (context, recountTokens) => {
+            context.commit('REC_TOKENS', recountTokens)
+        },
+
         recountSpecialPart: (context, recountTokens) => {
             context.commit('RECOUNT_SPECIAL_PART', recountTokens)
         },
@@ -278,7 +286,7 @@ actions: {
             context.commit('EDIT_TOTAL_TOKENS', totalTokens)
         },
 
-        setQuery: (context , query) => {
+        setQuery: (context, query) => {
             context.commit('SET_QUERY', query)
         },
 
@@ -408,7 +416,7 @@ actions: {
             state.tokensCounter.specialPartShare = recountShare;
             state.tokensCounter.specialPartTokens = recountTokens;
             state.defaultSections = state.defaultSections.map(item => {
-                if(item.special === true) {
+                if (item.special === true) {
                     item.share = recountShare;
                     item.tokens = recountTokens;
                 }
@@ -416,20 +424,82 @@ actions: {
             })
         },
 
-        RECOUNT_EDIT_SECTIONS: (state, {id, share, tokens}) => {
+        RECOUNT_EDIT_SECTIONS: (state, {id, nShare, tokens, noZero, badValue}) => {
             state.defaultSections = state.defaultSections.map(item => {
-                if(item.id === id) {
-                        item.share = share;
-                        item.tokens = tokens;
+                if (item.special === true) { //find special part
+                    if (nShare > 0) {
+                        if ((item.share - nShare) >= 0) {
+                            state.defaultSections = state.defaultSections.map(item => {
+                                if (item.id === id) {
+                                    item.share = nShare;
+                                    item.tokens = tokens;
 
-                    if (item.share <= 1) {
-                        item.share = 1;
-                        item.tokens = state.tokensCounter.totalTokens / 100 * item.share
-                    }
-                    if (item.share > 50) {
-                        item.share = 50;
-                        item.tokens = state.tokensCounter.totalTokens / 100 * item.share
-                    }
+                                    if (item.share <= 1) {
+                                        item.share = 1;
+                                        item.tokens = state.tokensCounter.totalTokens / 100 * item.share
+                                    }
+                                    if (item.share > 50) {
+                                        item.share = 50;
+                                        item.tokens = state.tokensCounter.totalTokens / 100 * item.share
+                                    }
+                                }
+                                return item
+                            })
+
+                        } else if (item.share < nShare) {
+                            ////////
+                            let eachShare = 0;
+                            state.defaultSections.forEach(item => { //count this items
+                                if (!item.special === true && item.id !== id) eachShare += Number(item.share);
+                            });
+                            eachShare += Number(nShare);
+
+                            if (eachShare <= 99) {
+                                eachShare = 0;
+                                state.defaultSections = state.defaultSections.map(item => {
+                                    if (item.id === id) {
+                                        item.share = nShare;
+                                        item.tokens = tokens;
+
+                                        if (item.share <= 1) {
+                                            item.share = 1;
+                                            item.tokens = state.tokensCounter.totalTokens / 100 * item.share
+                                        }
+                                        if (item.share > 50) {
+                                            item.share = 50;
+                                            item.tokens = state.tokensCounter.totalTokens / 100 * item.share
+                                        }
+                                    }
+                                    return item
+                                })
+                            } else {
+                                window.alert(noZero);
+                            }
+                            ////////
+                        } else {
+                            window.alert(noZero);
+                        }
+                    } else {
+                        window.alert(badValue);
+                }
+                }
+                return item
+            });
+        },
+
+        REC_TOKENS: (state, tokens) => {
+            state.defaultSections = state.defaultSections.map(item => {
+                if (item.special !== true) {
+                    item.tokens = tokens
+                }
+                return item
+            })
+        },
+
+        REC_SHARE: (state, share) => {
+            state.defaultSections = state.defaultSections.map(item => {
+                if (item.special !== true) {
+                    item.share = share
                 }
                 return item
             })
@@ -439,14 +509,14 @@ actions: {
             state.tokensCounter.totalTokens = totalTokens;
         },
 
-        SET_QUERY:(state, {newQuery}) => {
+        SET_QUERY: (state, {newQuery}) => {
             if (state.query <= 0) state.query = 0;
             if (state.query >= state.defaultSections.length) state.query = state.defaultSections.length;
             state.query += newQuery;
         },
 
         ADD_TASK: (state, {id, done, title, description, tokens, sectId}) => {
-            const task= {
+            const task = {
                 id: id,
                 done: done,
                 title: title,
@@ -454,8 +524,8 @@ actions: {
                 tokens: tokens
             };
             state.defaultSections = state.defaultSections.map(item => {
-                if(item.id === sectId) {
-                     item.tasksList.push(task)
+                if (item.id === sectId) {
+                    item.tasksList.push(task)
                 }
                 return item;
             });
@@ -466,25 +536,25 @@ actions: {
         },
 
         DELETE_TASK: (state) => {
-                state.defaultSections = state.defaultSections.map(item => {
-                    item.tasksList = item.tasksList.filter(itm => itm.done !== true);
-                    return item
-                })
+            state.defaultSections = state.defaultSections.map(item => {
+                item.tasksList = item.tasksList.filter(itm => itm.done !== true);
+                return item
+            })
 
         },
 
         DELETE_SECTION: (state) => {
-                state.defaultSections = state.defaultSections.filter(item => item.done !== true);
+            state.defaultSections = state.defaultSections.filter(item => item.done !== true);
         },
 
         TOGGLE_DONE_TASK: (state, {done, sectId}) => {
             state.defaultSections = state.defaultSections.map(item => {
-                if(item.id === sectId) {
+                if (item.id === sectId) {
                     item.tasksList = item.tasksList.map(itm => {
-                        if(itm.id === done) {
+                        if (itm.id === done) {
                             itm.done = !itm.done;
                         }
-                       return itm
+                        return itm
                     });
                 }
                 return item;
@@ -493,37 +563,74 @@ actions: {
 
         TOGGLE_DONE: (state, id) => {
             state.defaultSections = state.defaultSections.map(item => {
-                if(item.id === id) {
+                if (item.id === id) {
                     item.done = !item.done;
                 }
                 return item;
             });
         },
 
-        EDIT_SECTIONS: (state, {id, section, description, share, tokens}) => {
+        EDIT_SECTIONS: (state, {id, section, description, nShare, tokens, noZero, badValue}) => {
             state.defaultSections = state.defaultSections.map(item => {
-                if (item.id === id) {
-                    item.section = section;
-                    item.description = description;
-                    item.share = share;
-                    item.tokens = tokens;
+                if (item.special === true) { //find special part
+                    if (nShare > 0) {
+                        if ((item.share - nShare) >= 0) {
+                            state.defaultSections = state.defaultSections.map(item => {
+                                if (item.id === id) {
+                                    item.section = section;
+                                    item.description = description;
+                                    item.share = nShare;
+                                    item.tokens = tokens;
+                                }
+                                return item;
+                            });
+
+                        } else if (item.share < nShare) {
+                            ////////
+                            let eachShare = 0;
+                            state.defaultSections.forEach(item => { //count this items
+                                if (!item.special === true && item.id !== id) eachShare += Number(item.share);
+                            });
+                            eachShare += Number(nShare);
+
+                            if (eachShare <= 99) {
+                                eachShare = 0;
+                                state.defaultSections = state.defaultSections.map(item => {
+                                    if (item.id === id) {
+                                        item.section = section;
+                                        item.description = description;
+                                        item.share = nShare;
+                                        item.tokens = tokens;
+                                    }
+                                    return item;
+                                });
+                            } else {
+                                window.alert(noZero);
+                            }
+                            ////////
+                        } else {
+                            window.alert(noZero);
+                        }
+                    } else {
+                        window.alert(badValue);
+                    }
                 }
-                return item;
+                return item
             });
         },
 
         EDIT_TASK: (state, {id, title, description}) => {
-        state.defaultSections = state.defaultSections.map(item => {
-            item.tasksList.map(itm => {
-                if(itm.id === id) {
-                    itm.title = title;
-                    itm.description = description;
-                }
-                return itm
+            state.defaultSections = state.defaultSections.map(item => {
+                item.tasksList.map(itm => {
+                    if (itm.id === id) {
+                        itm.title = title;
+                        itm.description = description;
+                    }
+                    return itm
+                });
+                return item;
             });
-            return item;
-        });
-    },
+        },
 
         USER_PROFILE: (state, isProfile) => {
             state.isProfile = isProfile;

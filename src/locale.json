@@ -166,6 +166,11 @@
 
 		"tokensQuantity": "Условных токенов проекта",
 
+		"alerts.specialPart.nozero": "'Особая часть' не должна быть меньше или равна 0!",
+		"alerts.specialPart.badValue": "Недопустимое значение. Пожалуйста, задайте значение больше 0.",
+		"alerts.delete": "Вы уверены что хотите удалить это?",
+		"alerts.getSection": "Выберите раздел",
+
 
 		"sections.totalSections": "Всего разделов проекта",
 		"sections.tableSectionSection": "Раздел",
@@ -367,6 +372,10 @@
 
 		"tokensQuantity": "Conditional Tokens of the Project",
 
+		"alerts.specialPart.nozero": "'The special part' must not be less than or equal to 0!",
+		"alerts.specialPart.badValue": "Bad Value!:( Set value greater than 0, please.",
+		"alerts.delete": "Are you sure you want to delete this?",
+		"alerts.getSection": "Choose a section",
 
 		"sections.totalSections": "Total Project Sections",
 		"sections.tableSectionSection": "Section",
@@ -556,6 +565,11 @@
 		"newproject.sections": "項目部分",
 
 		"tokensQuantity": "項目的條件令牌",
+
+		"alerts.specialPart.nozero": "特殊部分不得小於或等於0",
+		"alerts.specialPart.badValue": "值不正確！:( 請設置大於0的值",
+		"alerts.delete": "你確定要刪除這個嗎？",
+		"alerts.getSection": "選擇一個部分",
 
 		"sections.totalSections": "項目總數",
 		"sections.tableSectionSection": "部分",

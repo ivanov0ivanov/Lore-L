@@ -57,7 +57,7 @@
             },
 
             sectionsId: {
-                type: Object,
+                type: Number,
                 required: true
             }
         },

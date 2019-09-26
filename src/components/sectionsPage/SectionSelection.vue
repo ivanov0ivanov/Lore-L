@@ -21,7 +21,6 @@
                     </thead>
                     <tbody>
                         <TableItem v-for="(item, index) of items" :key="item.id" :item="item" :index="index"/>
-
                     </tbody>
                 </table>
                 <TokensQuantity/>
@@ -37,15 +36,11 @@
     import TokensQuantity from "../newProjectPage/TokensQuantity";
     import TableItem from "./TableItem";
     import { mapActions } from 'vuex';
-    //import {mapGetters} from 'vuex';
     import {mapState} from 'vuex';
 
     export default {
         name: "SectionSelection",
         components: {TableItem, TokensQuantity},
-        // computed: mapGetters ({
-        //     items: 'getDefaultSections'
-        // }),
         data(){
             return {
                 shareAmount: '',
@@ -53,7 +48,7 @@
             }
         },
         computed: {
-            ...mapState({
+            ...mapState({ // getter doesnt call
                 items: 'defaultSections'
             })
         },
@@ -91,12 +86,12 @@
 
             onDelete() {
                 if(this.items.some(elem => elem.done === true)){
-                    if(confirm('Вы уверены что хотите удалить это?')) {
+                    if(confirm(this.$t('alerts.delete'))) {
                         this.deleteSection();
                         this.recountData();
                     }
                 } else {
-                    alert('Выберите раздел')
+                    alert(this.$t('alerts.getSection'))
                 }
             }
         }

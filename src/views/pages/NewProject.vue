@@ -20,5 +20,6 @@
 <style scoped lang="sass">
     main
         max-width: 375px
+        height: 50rem
         margin: 0 auto
 </style>

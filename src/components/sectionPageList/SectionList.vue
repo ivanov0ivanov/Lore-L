@@ -255,7 +255,7 @@
                     id: this.item.id,
                     section: this.newSection,
                     description: this.newDescription,
-                    share: this.newShare,
+                    nShare: this.newShare,
                     tokens: this.$store.state.tokensCounter.totalTokens / 100 * this.newShare
                 });
                 this.recountData();
@@ -265,29 +265,18 @@
             incdec(val) {
                 clearTimeout(this.hndHelp); //tips
                 this.showHelp = false; //tips
-
-                this.newShare = this.item.share + val;
-
-                this.defaultSections = this.defaultSections.map(item => {
-                    if(item.special === true) {
-
-                         if (item.share >= 0 && item.share >= this.newShare) {
-                            this.recountEditSection({
-                                id: this.item.id,
-                                share: this.newShare,
-                                tokens: this.$store.state.tokensCounter.totalTokens / 100 * this.newShare
-                            });
-                            this.cleanData();
-                            this.recountData();
-
-                        } else {
-                            alert('Особая часть не должна быть равной 0')
-                        }
-                    }
+                this.newShare = Number(this.item.share) + val;
+                const noZero = this.$t('alerts.specialPart.nozero');
+                const badValue = this.$t('alerts.specialPart.badValue');
+                this.recountEditSection({
+                    id: this.item.id,
+                    nShare: this.newShare,
+                    tokens: this.$store.state.tokensCounter.totalTokens / 100 * this.newShare,
+                    noZero: noZero,
+                    badValue: badValue
                 });
-                this.renderChart();
                 this.cleanData();
-
+                this.recountData();
                 this.hndHelp = setTimeout(this.help, this.delayShowHelp);
             },
 
@@ -314,5 +303,8 @@
         float: right
         color: #e648cd
         background: rgba(255, 255, 255, .75)
+
+    .wrapper-idea .pie-chart dt b
+        font-size: 1.6em !important
 </style>
 <style src="../../assets/css/idea.css" scoped></style>

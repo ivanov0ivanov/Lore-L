@@ -1,14 +1,17 @@
 <template>
-  <tr>
+    <tr>
         <th scope="row">
             <div v-bind:class="{bgHover:item.done}" @click.prevent="checkOnToggleDone">{{index + 1}}</div>
         </th>
         <td>
-            <div v-bind:class="{bgHover:item.done}" class="d-flex justify-content-between" @click.prevent="checkOnToggleDone">
+            <div v-bind:class="{bgHover:item.done}" class="d-flex justify-content-between"
+                 @click.prevent="checkOnToggleDone">
                 <span>
-                    <input v-if="!item.special" type="checkbox" :checked="item.done" @change="toggleDone(item.id)" class="form-check-input d-none">
+                    <input v-if="!item.special" type="checkbox" :checked="item.done" @change="toggleDone(item.id)"
+                           class="form-check-input d-none">
                     <label v-if="!isEdit" class="form-check-label">{{item.section}}</label>
-                    <input v-else type="text" class="border-0 bg-light pl-1 pr-1" @keyup.enter="onSave" @keyup.esc="onCancel" v-model="newSection">
+                    <input v-else type="text" class="border-0 bg-light pl-1 pr-1" @keyup.enter="onSave"
+                           @keyup.esc="onCancel" v-model="newSection">
                 </span>
                 <span v-if="!item.special">
                     <font-awesome-icon v-if="!isEdit" icon="pen" @click.prevent="switchToEdit"/>
@@ -21,7 +24,8 @@
             <div v-bind:class="{bgHover:item.done}">
                 <span>
                     <label v-if="!isEdit" class="form-check-label">{{item.share}}%</label>
-                    <input v-else style="width: 25px" class="border-0 bg-light text-center" @keyup.enter="onSave" type="number" @keyup.esc="onCancel" v-model="newShare">
+                    <input v-else style="width: 25px" class="border-0 bg-light text-center" @keyup.enter="onSave"
+                           type="number" @keyup.esc="onCancel" v-model="newShare">
                 </span>
             </div>
         </td>
@@ -36,9 +40,10 @@
 </template>
 
 <script>
-    import { mapActions } from 'vuex';
+    import {mapActions} from 'vuex';
     import {mapState} from "vuex";
     import {mapGetters} from "vuex";
+
     export default {
         name: "TableItem",
         data() {
@@ -73,30 +78,39 @@
 
         mounted() {
             this.recountData();
+            // this.reciTokens();
         },
 
         methods: {
             ...mapActions({
                 editSections: 'editSections',
                 toggleDone: 'toggleDone',
-                recountSpecialPart: "recountSpecialPart"
+                recountSpecialPart: "recountSpecialPart",
+                recTokens: "recTokens"
             }),
 
-            recountData() {
+            reciTokens() { // update this token if set new total tokens
+                if (this.item.special !== true) {
+                    this.recTokens(this.tokensCounter.totalTokens / 100 * this.item.share)
+                }
+            },
+
+            recountData() { //update special part
                 this.defaultSections.forEach(item => {
-                    if(!item.special === true) this.shareAmount = Number(this.shareAmount) + Number(item.share);
-                    if(!item.special === true) this.tokenAmount = Number(this.tokenAmount) + Number(item.tokens);
+                    if (!item.special === true) this.shareAmount = Number(this.shareAmount) + Number(item.share);
+                    if (!item.special === true) this.tokenAmount = Number(this.tokenAmount) + Number(item.tokens);
                 });
-                    if(this.shareAmount !== 0) {
-                        this.recountSpecialPart({
-                            recountShare: Number(100 - this.shareAmount),
-                            recountTokens: Number(this.$store.state.tokensCounter.totalTokens - this.tokenAmount)});
-                    }
+                if (this.shareAmount !== 0) {
+                    this.recountSpecialPart({
+                        recountShare: Number(100 - this.shareAmount),
+                        recountTokens: Number(this.$store.state.tokensCounter.totalTokens - this.tokenAmount)
+                    });
+                }
                 this.cleanData();
             },
 
-            checkOnToggleDone(){
-                if(!this.item.special) this.toggleDone(this.item.id)
+            checkOnToggleDone() {
+                if (!this.item.special) this.toggleDone(this.item.id)
             },
 
             cleanData() {
@@ -108,7 +122,7 @@
 
             onEdit() {
                 if (!this.isEdit) {
-                     this.switchToEdit();
+                    this.switchToEdit();
                 } else {
                     this.onSave();
                 }
@@ -119,30 +133,26 @@
                 this.newShare = this.item.share;
                 this.isEdit = true;
             },
+
             onCancel() {
                 this.isEdit = false;
                 this.cleanData();
             },
+
             onSave() {
-                this.defaultSections = this.defaultSections.map(item => {
-                    if(item.special === true) {
-
-                        if (item.share >= 0 && item.share >= this.newShare) {
-                                this.isEdit = false;
-                                this.editSections({
-                                    id: this.item.id,
-                                    section: this.newSection,
-                                    share: this.newShare,
-                                    tokens: this.$store.state.tokensCounter.totalTokens / 100 * this.newShare
-                                });
-                                this.cleanData();
-                                this.recountData();
-
-                        } else {
-                            alert('Особая часть не должна быть равной 0')
-                        }
-                    }
+                this.isEdit = false;
+                const noZero = this.$t('alerts.specialPart.nozero');
+                const badValue = this.$t('alerts.specialPart.badValue');
+                this.editSections({
+                    id: this.item.id,
+                    section: this.newSection,
+                    nShare: this.newShare,
+                    tokens: this.$store.state.tokensCounter.totalTokens / 100 * this.newShare, //set new tokens
+                    noZero: noZero,
+                    badValue: badValue
                 });
+                this.recountData();
+                this.cleanData();
             }
         }
     }
@@ -150,9 +160,9 @@
 
 <style scoped lang="sass">
     .fa-pen, .fa-save
-         display: none
-         color: #FB07D2
-         align-self: center
-         position: absolute
-         right: 3px
+        display: none
+        color: #FB07D2
+        align-self: center
+        position: absolute
+        right: 3px
 </style>

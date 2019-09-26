@@ -1,6 +1,6 @@
 <template>
     <section class="new-projects__container">
-        <div class="container text-center pt-3 pb-1">
+        <div class="container text-center pt-3 pb-1 pl-0 pr-0">
             <form>
                 <div class="form-group mb-4">
                     <input type="text" class="form-control" v-bind:placeholder="$t('newproject.shortname')">

@@ -24,7 +24,7 @@
         <font-awesome-icon class="text-dark" icon="bell"/>
       </router-link>
 
-      <router-link v-if="this.$store.state.isProfile || this.$store.state.isProfile === null" to="/profile" class="menu-link profile">
+      <router-link v-if="this.$store.state.isProfile || this.$store.state.isProfile === null || this.$store.state.isProfile === 0" to="/profile" class="menu-link profile">
         <font-awesome-icon class="text-dark" icon="user-circle"/>
       </router-link>
     </div>
