@@ -1,7 +1,7 @@
 // Блок переменных
 const host = process.env.APP_HOST || 'http://localhost:8080',
 	port = process.env.PORT || 8080,
-	dbUrl = process.env.DB_URL || 'mongodb://localhost/loreland';
+	dbUrl = process.env.DB_URL || 'mongodb://localhost/loreland'
 
 
 // Набор конфигураций

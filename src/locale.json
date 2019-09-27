@@ -59,9 +59,11 @@
 		"voting.vote": "Проголосовать",
 		"voting.results": "Итоги голосования:",
 
-
+		"logout": "Выйти из учетной записи",
 		"tabFeatured": "Избранное",
+		"investments.office": "Кабинет инвестора",
 		"tabProfile": "Профиль",
+		"tabMyProjects": "Мои проекты",
 		"idea": "Идея",
 
 		"featured.selProj": "Избранные проекты",
@@ -269,8 +271,11 @@
 		"voting.vote": "Vote",
 		"voting.results": "Voting results:",
 
+		"logout": "Log out of account",
 		"tabFeatured": "Featured",
+		"investments.office": "Investor's office",
 		"tabProfile": "Profile",
+		"tabMyProjects": "My Projects",
 		"idea": "Idea",
 
 		"featured.selProj": "Featured Projects",
@@ -461,8 +466,11 @@
 		"voting.vote": "表决",
 		"voting.results": "投票结果:",
 
+		"logout": "登出帳戶",
 		"tabFeatured": "精選",
+		"investments.office": "投資者辦公室",
 		"tabProfile": "輪廓",
+		"tabMyProjects": "我的專案",
 		"idea": "主意",
 
 		"featured.selProj": "特色項目",

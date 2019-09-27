@@ -532,7 +532,14 @@ export default new Vuex.Store({
         },
 
         ADD_SECTION: (state, section) => {
-            state.defaultSections.push(section);
+            // state.defaultSections.push(section);
+            state.defaultSections.splice(state.defaultSections.length - 1, 0, section);
+            state.defaultSections = state.defaultSections.map(item => {
+                if (item.special === true) {
+                    item.id = item.id + 1
+                }
+                return item;
+            })
         },
 
         DELETE_TASK: (state) => {

@@ -5,11 +5,13 @@
         <div class="wrapper-register">
           <router-link to="/" class="link-back"><i class="icon-left-open-big"></i></router-link>
           <router-link to="/idea" class="link-idea"><i class="icon-right-open-big"></i></router-link>
-			<button @click="signout">
-				{{ getLocaleString('user' + '.signout', '!Выйти из учетной записи')}}
+			<button class="btn btn-primary" @click="signout">
+              {{$t('logout')}}
 			</button>
-          <WorkProjects></WorkProjects>
+          <br>
           <router-link :to="{ name: 'profile' }">{{$t('tabProfile')}}</router-link>
+          <div></div>
+          <router-link :to="{ name: 'myProjects' }">{{$t('tabMyProjects')}}</router-link>
           <div></div>
           <router-link :to="{ name: 'votingPage' }">{{$t('voting.vote')}}</router-link>
           <div></div>
@@ -28,10 +30,8 @@
 
 <script>
 import { mapActions, mapGetters } from 'vuex'
-import WorkProjects from "../components/WorkProjects";
 
 export default {
-  components: {WorkProjects},
   data: () => {
     return {
       projects: [{

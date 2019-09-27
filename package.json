@@ -6,7 +6,7 @@
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
     "lint": "vue-cli-service lint",
-    "server-dev": "concurrently \"vue-cli-service build --watch\" \"nodemon node server\"",
+    "server-dev": "concurrently \"vue-cli-service build --watch\" \"nodemon server\"",
     "server": "vue-cli-service build && node server"
   },
   "dependencies": {

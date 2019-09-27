@@ -1,18 +1,18 @@
 // Блок переменных
 const path = require('path'),
 	bcrypt = require('bcrypt'),
-	mongoose = require(path.join(__dirname, '..', 'libs', 'mongoose'));
+	mongoose = require(path.join(__dirname, '..', 'libs', 'mongoose'))
 
 
 // Блок переменных
-const Schema = mongoose.Schema;
+const Schema = mongoose.Schema
 
 
 // Создание схемы
 const schema = new Schema({
 	username: {	// Имя пользователя
 		type: String,
-		required: true,
+    required: true,
 		unique: true
 	},
 	hash: {	// Зашифрованный пароль
@@ -92,56 +92,50 @@ const schema = new Schema({
 	}
 }, {
 	timestamps: true // Временные метки
-});
+})
 
 
 // Проверка пароля
 schema.methods.verifyPassword = async function (password) {
 	return await bcrypt.compare(password, this.hash)
-};
+}
 
 
 // Добавление пользователя
 schema.statics.add = async function({username, password}) {
 	// Получение модели
-	let User = this;
-
+	let User = this
+	
 	// Формирование нового пользователя
-	const user = new User({
+	var user = new User({
 		username: username,
 		hash: await bcrypt.hash(password, Number(10)),
 		reputation: [{category: 'дизайн'}, {category: 'разработка на JS'}]
-	});
+	})
 
 	// Сохранение
-	return await user.save((err, user) => {
-		if (err) {
-			console.log('err', err)
-		}
-		console.log('saved user', user)
-	})
-};
+	return await user.save()
+}
 
 // Добавление пользователя с oauth
 schema.statics.oauth = async function(profile, accessToken, refreshToken) {
 	// Получаем модель
-	let User = this;
+	let User = this
 
 	// Формирование нового пользователя
-	const user = new User({
+	var user = new User({
 		username: profile.username || profile.login || profile.id,
 		[profile.provider]: {
 			id: profile.id,
 			accessToken,
 			refreshToken
 		}
-	});
+	})
 
 	// Сохранение
 	return await user.save()
-};
+}
 
 
 // Экспорт
-const User = mongoose.model('User', schema);
-module.exports = User;
+exports.User = mongoose.model('User', schema)

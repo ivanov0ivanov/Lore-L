@@ -1,6 +1,6 @@
-const proxy = require('http-proxy-middleware')
+var proxy = require('http-proxy-middleware')
 
-const options = {
+var options = {
   target: 'http://5.200.53.83',
   changeOrigin: true,
   ws: true,

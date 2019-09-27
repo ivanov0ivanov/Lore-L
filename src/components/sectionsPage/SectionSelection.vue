@@ -80,7 +80,7 @@
             },
 
             onAdd(){
-                this.addSection(this.items[this.items.length-1].id);
+                this.addSection(this.items[this.items.length-2].id);
                 this.recountData();
             },
 
