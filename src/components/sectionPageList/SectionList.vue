@@ -120,15 +120,11 @@
                     h: this.$store.state.Storage.ideaStorageH || '',
                     p: this.$store.state.Storage.ideaStorageP || ''
                 },
-                // chart: null,
                 showHelp: false,
                 showHelpMessage: false,
                 delayShowHelp: 7000,
                 hndHelp: 0,
-                // tokensAtDivvy: 15000,
-                // taskList: [],
                 showTaskList: false,
-
                 state_dSections: this.$store.state.defaultSections,
                 isEdit: false,
                 newSection: '',
