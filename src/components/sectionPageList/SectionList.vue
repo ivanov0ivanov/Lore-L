@@ -42,7 +42,7 @@
             </div>
             <h2>
             <span>
-                 <label v-if="!isEdit || item.special" class="form-check-label">Раздел «{{item.section}}»</label>
+                 <label v-if="!isEdit || item.special" class="form-check-label">{{$t("sectionList.section")}} «{{item.section}}»</label>
                  <input v-else type="text" class="border-0 bg-light pl-1 pr-1 text-center" @keyup.enter="onSave"
                         @keyup.esc="onCancel" v-model="newSection">
             </span>
@@ -65,7 +65,7 @@
                 <div id="chartdiv"></div>
             </div>
             <dl class="right">
-                <dt><b>{{item.tokens/1000000}}</b>{{$t("sectionList.mln")}}</dt>
+                <dt><b>{{item.tokens/1000}}</b>{{$t("sectionList.thousands")}}</dt>
                 <dd>{{$t("sectionList.shareinTokens1")}}<br>{{$t("sectionList.shareinTokens2")}}</dd>
             </dl>
             <dl>
@@ -152,8 +152,8 @@
         },
         mounted() {
             this.hndHelp = setTimeout(this.help, this.delayShowHelp); //tips
-            this.renderChart();
             this.recountData();
+            this.renderChart();
 
         },
         beforeDestroy() { // for amcharts
@@ -195,19 +195,39 @@
 
                 const chart = am4core.create("chartdiv", am4charts.PieChart3D);
 
+                let
+                    specialShare = '',
+                    specialTokens = '';
+
+                this.state_dSections.forEach(item => {
+                    if (item.special === true) {
+                        specialShare= item.share;
+                        specialTokens = item.tokens;
+                    }
+                });
+
                 chart.data = [
-                    {"value": this.item.tokens * this.item.share},
-                    {"value": this.item.tokens * 100 - this.item.tokens * this.item.share}
+                    {
+                        tokens: this.item.tokens,
+                        share: this.item.share
+                    },
+                    {
+                        tokens: specialTokens,
+                        share: specialShare
+                    }
                 ];
 
                 const pieSeries = chart.series.push(new am4charts.PieSeries3D());
-                pieSeries.dataFields.value = "value";
+                pieSeries.dataFields.value = "share";
+                pieSeries.dataFields.category  = "tokens";
                 pieSeries.labels.template.disabled = true;
                 pieSeries.ticks.template.disabled = true;
-                pieSeries.ticks.template.tooltipText = "{categoryX}\n[bold]{valueY}[/]";
+                pieSeries.slices.template.tooltipText = "{category} ({value.value}%)";
                 pieSeries.radius = 130;
                 pieSeries.angle = 55;
-                pieSeries.startAngle = 270;
+                pieSeries.slices.template.showOnInit = true;
+                pieSeries.slices.template.hiddenState.properties.shiftRadius = 1;
+                pieSeries.hiddenState.properties.endAngle = -90;
             },
 
             backSection(){
@@ -275,6 +295,7 @@
                     noZero: noZero,
                     badValue: badValue
                 });
+                this.renderChart();
                 this.cleanData();
                 this.recountData();
                 this.hndHelp = setTimeout(this.help, this.delayShowHelp);

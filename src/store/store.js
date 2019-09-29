@@ -188,7 +188,7 @@ export default new Vuex.Store({
                 id: 11,
                 special: true,
                 done: false,
-                section: "Особая часть",
+                section: "Special part",
                 description: 'Искусство преобразует закон исключённого третьего. Апостериори, гравитационный парадокс абстрактен.',
                 share: 1,
                 tokens: 1,

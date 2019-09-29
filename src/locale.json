@@ -182,7 +182,7 @@
 
 		"sectionList.section": "Раздел",
 		"sectionList.details": "Подробнее",
-		"sectionList.mln": "млн",
+		"sectionList.thousands": "Т",
 		"sectionList.shareinTokens1": "Доля",
 		"sectionList.shareinTokens2": "в токенах",
 		"sectionList.shareshareinProject1": "Доля раздела",
@@ -390,7 +390,7 @@
 
 		"sectionList.section": "Section",
 		"sectionList.details": "More details",
-		"sectionList.mln": "mln",
+		"sectionList.thousands": "K",
 		"sectionList.shareinTokens1": "Share",
 		"sectionList.shareinTokens2": "in tokens",
 		"sectionList.shareshareinProject1": "Section share",
@@ -587,7 +587,7 @@
 
 		"sectionList.section": "部分",
 		"sectionList.details": "更多細節",
-		"sectionList.mln": "一百萬",
+		"sectionList.thousands": "K",
 		"sectionList.shareinTokens1": "分享",
 		"sectionList.shareinTokens2": "在令牌中",
 		"sectionList.shareshareinProject1": "科分享",

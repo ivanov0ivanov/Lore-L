@@ -25,7 +25,7 @@
                     </table>
                 </div>
                 <div class="modal-footer d-flex justify-content-center">
-                    <button type="button" class="btn btn-secondary flex-grow-1" data-dismiss="modal">{{$t("modalFinishEdit.edit")}}</button>
+                    <router-link to="/sections" type="button" class="btn btn-secondary flex-grow-1" data-dismiss="modal">{{$t("modalFinishEdit.edit")}}</router-link>
                     <router-link to="/progressProject" type="button" data-dismiss="modal" class="btn btn-primary flex-grow-1">{{$t("modalFinishEdit.ok")}}</router-link>
                 </div>
             </div>

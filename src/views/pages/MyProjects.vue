@@ -16,10 +16,25 @@
     import MyProjectsSection2 from "../../components/myProjectsPage/MyProjects-section2";
     import MyProjectsSection3 from "../../components/myProjectsPage/MyProjects-section3";
     import MyProjectsSection4 from "../../components/myProjectsPage/MyProjects-section4";
+    import { mapActions } from 'vuex';
 
     export default {
         name: "MyProjects",
-        components: {MyProjectsSection4, MyProjectsSection3, MyProjectsSection2, MyProjectsSection1, TopHeader}
+        components: {MyProjectsSection4, MyProjectsSection3, MyProjectsSection2, MyProjectsSection1, TopHeader},
+
+        data() {
+            return {
+                isProfile: null
+            };
+        },
+
+        methods: mapActions({
+            setProfile: 'setProfile'
+        }),
+
+        mounted() {
+            this.setProfile(this.isProfile);
+        }
     }
 </script>
 
