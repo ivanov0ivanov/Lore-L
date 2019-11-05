@@ -22,7 +22,7 @@
     "http-proxy-middleware": "^0.19.1",
     "jsonwebtoken": "^8.4.0",
     "moment": "^2.24.0",
-    "mongoose": "^5.4.16",
+    "mongoose": "^5.7.5",
     "monk": "^6.0.6",
     "multer": "^1.4.1",
     "multiparty": "^4.2.1",
